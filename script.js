@@ -74,9 +74,27 @@ function updateGreeting() {
     const hour = new Date().getHours();
     let greetingText = '';
 
-    if (hour < 12) {
+    if (hour >= 0 && hour < 6) {
+      // Late night greetings (12:00 AM - 5:59 AM)
+      // Pick one randomly and keep it for the session
+      const lateNightGreetings = [
+        'Burning the midnight oil?',
+        'Working late?',
+        'Early bird or night owl?'
+      ];
+
+      // Check if we already have a greeting for this session
+      let sessionGreeting = sessionStorage.getItem('lateNightGreeting');
+      if (!sessionGreeting) {
+        // Pick a random greeting and store it for this session
+        const randomIndex = Math.floor(Math.random() * lateNightGreetings.length);
+        sessionGreeting = lateNightGreetings[randomIndex];
+        sessionStorage.setItem('lateNightGreeting', sessionGreeting);
+      }
+      greetingText = sessionGreeting;
+    } else if (hour >= 6 && hour < 12) {
       greetingText = 'Good morning';
-    } else if (hour < 18) {
+    } else if (hour >= 12 && hour < 18) {
       greetingText = 'Good afternoon';
     } else {
       greetingText = 'Good evening';
