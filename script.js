@@ -18,19 +18,10 @@ const fallbackQuotes = [
 const timeEl = document.getElementById('time');
 const dateEl = document.getElementById('date');
 const greetingEl = document.getElementById('greeting');
-const focusQuestionEl = document.getElementById('focus-question');
 const focusInputEl = document.getElementById('focus-input');
-const focusDisplayEl = document.getElementById('focus-display');
-const focusTextEl = document.getElementById('focus-text');
-const editFocusBtn = document.getElementById('edit-focus');
 const quoteEl = document.getElementById('quote');
 const quoteAuthorEl = document.getElementById('quote-author');
 const refreshQuoteBtn = document.getElementById('refresh-quote-btn');
-const todoInput = document.getElementById('todo-input');
-const addTodoBtn = document.getElementById('add-todo-btn');
-const todoList = document.getElementById('todo-list');
-const toggleTodoBtn = document.getElementById('toggle-todo');
-const todoPanel = document.getElementById('todo-panel');
 const settingsBtn = document.getElementById('settings-btn');
 const settingsPanel = document.getElementById('settings-panel');
 const closeSettingsBtn = document.getElementById('close-settings');
@@ -51,8 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateDate();
   updateGreeting();
   loadDailyQuote();
-  loadFocus();
-  loadTodos();
+  loadGoal();
   loadBackgroundMode();
   setupEventListeners();
 
@@ -184,113 +174,25 @@ async function refreshQuote() {
   await loadDailyQuote(true);
 }
 
-// Focus Functions
-function loadFocus() {
-  chrome.storage.sync.get(['mainFocus'], (result) => {
-    if (result.mainFocus) {
-      showFocusDisplay(result.mainFocus);
-    } else {
-      showFocusInput();
+// ============ GOAL FUNCTIONS ============
+
+/**
+ * Load and display the saved goal
+ */
+function loadGoal() {
+  chrome.storage.sync.get(['mainGoal'], (result) => {
+    if (result.mainGoal) {
+      focusInputEl.textContent = result.mainGoal;
     }
   });
 }
 
-function showFocusInput() {
-  focusQuestionEl.style.display = 'block';
-  focusInputEl.style.display = 'block';
-  focusDisplayEl.style.display = 'none';
-  focusInputEl.focus();
-}
-
-function showFocusDisplay(focus) {
-  focusQuestionEl.style.display = 'none';
-  focusInputEl.style.display = 'none';
-  focusDisplayEl.style.display = 'flex';
-  focusTextEl.textContent = focus;
-}
-
-function saveFocus() {
-  const focus = focusInputEl.value.trim();
-  if (focus) {
-    chrome.storage.sync.set({ mainFocus: focus }, () => {
-      showFocusDisplay(focus);
-      focusInputEl.value = '';
-    });
-  }
-}
-
-// Todo Functions
-function loadTodos() {
-  chrome.storage.sync.get(['todos'], (result) => {
-    const todos = result.todos || [];
-    renderTodos(todos);
-  });
-}
-
-function renderTodos(todos) {
-  todoList.innerHTML = '';
-
-  todos.forEach((todo, index) => {
-    const li = document.createElement('li');
-    li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.className = 'todo-checkbox';
-    checkbox.checked = todo.completed;
-    checkbox.addEventListener('change', () => toggleTodo(index));
-
-    const text = document.createElement('span');
-    text.className = 'todo-text';
-    text.textContent = todo.text;
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.className = 'delete-todo';
-    deleteBtn.textContent = '✕';
-    deleteBtn.addEventListener('click', () => deleteTodo(index));
-
-    li.appendChild(checkbox);
-    li.appendChild(text);
-    li.appendChild(deleteBtn);
-    todoList.appendChild(li);
-  });
-}
-
-function addTodo() {
-  const text = todoInput.value.trim();
-  if (!text) return;
-
-  chrome.storage.sync.get(['todos'], (result) => {
-    const todos = result.todos || [];
-    todos.push({ text, completed: false });
-
-    chrome.storage.sync.set({ todos }, () => {
-      renderTodos(todos);
-      todoInput.value = '';
-    });
-  });
-}
-
-function toggleTodo(index) {
-  chrome.storage.sync.get(['todos'], (result) => {
-    const todos = result.todos || [];
-    todos[index].completed = !todos[index].completed;
-
-    chrome.storage.sync.set({ todos }, () => {
-      renderTodos(todos);
-    });
-  });
-}
-
-function deleteTodo(index) {
-  chrome.storage.sync.get(['todos'], (result) => {
-    const todos = result.todos || [];
-    todos.splice(index, 1);
-
-    chrome.storage.sync.set({ todos }, () => {
-      renderTodos(todos);
-    });
-  });
+/**
+ * Save the current goal to storage
+ */
+function saveGoal() {
+  const goal = focusInputEl.textContent.trim();
+  chrome.storage.sync.set({ mainGoal: goal });
 }
 
 // ============ UNSPLASH API FUNCTIONS ============
@@ -581,36 +483,20 @@ function showApiKeyStatus(message, type) {
 // ============ EVENT LISTENERS ============
 
 function setupEventListeners() {
-  // Focus input
+  // Goal input (contenteditable)
+  focusInputEl.addEventListener('blur', () => {
+    saveGoal();
+  });
+
   focusInputEl.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-      saveFocus();
+      e.preventDefault();
+      focusInputEl.blur();
     }
   });
 
-  focusInputEl.addEventListener('blur', () => {
-    if (focusInputEl.value.trim()) {
-      saveFocus();
-    }
-  });
-
-  editFocusBtn.addEventListener('click', () => {
-    chrome.storage.sync.remove('mainFocus', () => {
-      showFocusInput();
-    });
-  });
-
-  // Todo
-  addTodoBtn.addEventListener('click', addTodo);
-
-  todoInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      addTodo();
-    }
-  });
-
-  toggleTodoBtn.addEventListener('click', () => {
-    todoPanel.classList.toggle('hidden');
+  focusInputEl.addEventListener('input', () => {
+    saveGoal();
   });
 
   // Settings
