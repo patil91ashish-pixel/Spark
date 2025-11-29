@@ -400,6 +400,149 @@ body {
   background: rgba(255, 255, 255, 0.4);
 }
 
+/* Refresh Background Button */
+.refresh-bg-btn {
+  position: fixed;
+  top: 2rem;
+  right: 6rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  z-index: 100;
+}
+
+.refresh-bg-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(180deg);
+}
+
+.refresh-bg-btn:active {
+  transform: rotate(180deg) scale(0.9);
+}
+
+/* Photo Attribution */
+.photo-attribution {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  z-index: 50;
+  animation: fadeIn 0.5s ease;
+}
+
+.photo-attribution a {
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition: border-color 0.3s ease;
+}
+
+.photo-attribution a:hover {
+  border-bottom-color: white;
+}
+
+/* API Key Settings */
+.api-key-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.95rem;
+  padding: 0.7rem;
+  outline: none;
+  margin-bottom: 0.5rem;
+  transition: background 0.3s ease;
+}
+
+.api-key-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.api-key-input:focus {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.save-api-key-btn {
+  width: 100%;
+  background: rgba(100, 200, 100, 0.4);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.95rem;
+  padding: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+
+.save-api-key-btn:hover {
+  background: rgba(100, 200, 100, 0.6);
+}
+
+.api-key-status {
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.api-key-status.success {
+  background: rgba(100, 200, 100, 0.3);
+}
+
+.api-key-status.error {
+  background: rgba(200, 100, 100, 0.3);
+}
+
+.api-help-text {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+.api-help-text a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Settings Panel Max Height with Scrolling */
+.settings-panel {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.settings-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.settings-panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.settings-panel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.settings-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {

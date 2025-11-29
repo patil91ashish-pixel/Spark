@@ -67,10 +67,44 @@
     <!-- Settings Button -->
     <button class="settings-btn" id="settings-btn">⚙️</button>
 
+    <!-- Refresh Background Button -->
+    <button class="refresh-bg-btn" id="refresh-bg-btn" title="New background image">🔄</button>
+
+    <!-- Photo Attribution -->
+    <div class="photo-attribution" id="photo-attribution" style="display: none;">
+      Photo by <a href="#" target="_blank" rel="noopener" id="photographer-link"></a> on
+      <a href="https://unsplash.com/?utm_source=spark_extension&utm_medium=referral" target="_blank" rel="noopener">Unsplash</a>
+    </div>
+
     <!-- Settings Panel -->
     <div class="settings-panel" id="settings-panel">
       <h3>Settings</h3>
+
       <div class="setting-item">
+        <label for="bg-mode">Background Source:</label>
+        <select id="bg-mode">
+          <option value="unsplash">Unsplash API (Dynamic)</option>
+          <option value="static">Static Images</option>
+        </select>
+      </div>
+
+      <div class="setting-item" id="unsplash-settings">
+        <label for="api-key-input">Unsplash API Key:</label>
+        <input
+          type="password"
+          id="api-key-input"
+          class="api-key-input"
+          placeholder="Enter your Unsplash API key..."
+        >
+        <button class="save-api-key-btn" id="save-api-key-btn">Save Key</button>
+        <div class="api-key-status" id="api-key-status"></div>
+        <p class="api-help-text">
+          Get your free API key from
+          <a href="https://unsplash.com/developers" target="_blank" rel="noopener">Unsplash Developers</a>
+        </p>
+      </div>
+
+      <div class="setting-item" id="static-settings" style="display: none;">
         <label for="bg-select">Background:</label>
         <select id="bg-select">
           <option value="0">Nature 1</option>
@@ -80,6 +114,7 @@
           <option value="4">Forest</option>
         </select>
       </div>
+
       <button class="close-settings" id="close-settings">Close</button>
     </div>
   </div>
