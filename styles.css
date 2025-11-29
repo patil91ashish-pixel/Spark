@@ -158,25 +158,38 @@ body {
 /* Bottom Section */
 .bottom-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-end;
   animation: fadeInUp 1.6s ease-out;
+  position: relative;
 }
 
 .quote-container {
-  flex: 1;
-  max-width: 550px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: 600px;
+  padding-bottom: 2.5rem;
 }
 
 .quote {
   font-size: 1.15rem;
   font-weight: 300;
   font-style: italic;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.6rem;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
   line-height: 1.65;
   opacity: 0.92;
   letter-spacing: 0.2px;
+}
+
+.quote-author-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
 }
 
 .quote-author {
@@ -185,6 +198,30 @@ body {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   font-weight: 400;
   letter-spacing: 0.5px;
+}
+
+.refresh-quote-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.refresh-quote-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: rotate(180deg);
+  opacity: 0.9;
 }
 
 /* Todo Section */
@@ -509,14 +546,14 @@ body {
 /* Photo Attribution */
 .photo-attribution {
   position: fixed;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(15px);
-  padding: 0.5rem 0.8rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.7rem;
+  bottom: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.65rem;
   z-index: 50;
   animation: fadeInUp 0.8s ease-out;
   opacity: 0.5;
@@ -524,7 +561,7 @@ body {
 }
 
 .photo-attribution:hover {
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 .photo-attribution a {
@@ -759,11 +796,15 @@ body {
   .bottom-section {
     flex-direction: column;
     gap: 2rem;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .quote-container {
-    max-width: 100%;
+    max-width: 90%;
+    padding-bottom: 1.5rem;
+    position: relative;
+    transform: none;
+    left: auto;
   }
 
   .quote {
@@ -772,7 +813,13 @@ body {
   }
 
   .quote-author {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
+  }
+
+  .refresh-quote-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 0.65rem;
   }
 
   .todo-panel {
@@ -792,9 +839,9 @@ body {
   }
 
   .photo-attribution {
-    bottom: 1rem;
-    left: 1rem;
-    font-size: 0.75rem;
-    padding: 0.5rem 0.8rem;
+    bottom: 0.8rem;
+    left: 0.8rem;
+    font-size: 0.6rem;
+    padding: 0.35rem 0.6rem;
   }
 }

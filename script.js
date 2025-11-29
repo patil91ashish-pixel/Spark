@@ -7,28 +7,11 @@ const backgrounds = [
   'https://images.unsplash.com/photo-1511497584788-876760111969?w=1920&q=80', // Forest path
 ];
 
-// Inspirational quotes collection
-const quotes = [
+// Fallback quotes (used if Quotable API fails)
+const fallbackQuotes = [
   { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
   { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-  { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
-  { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-  { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
-  { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
-  { text: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
-  { text: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
-  { text: "What you get by achieving your goals is not as important as what you become by achieving your goals.", author: "Zig Ziglar" },
-  { text: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
-  { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
-  { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
-  { text: "Everything you've ever wanted is on the other side of fear.", author: "George Addair" },
-  { text: "Believe in yourself. You are braver than you think, more talented than you know, and capable of more than you imagine.", author: "Roy T. Bennett" },
-  { text: "I learned that courage was not the absence of fear, but the triumph over it.", author: "Nelson Mandela" },
-  { text: "Challenges are what make life interesting and overcoming them is what makes life meaningful.", author: "Joshua J. Marine" },
-  { text: "If you want to lift yourself up, lift up someone else.", author: "Booker T. Washington" },
-  { text: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" },
-  { text: "Act as if what you do makes a difference. It does.", author: "William James" },
-  { text: "Success is not how high you have climbed, but how you make a positive difference to the world.", author: "Roy T. Bennett" }
+  { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" }
 ];
 
 // DOM Elements
@@ -42,6 +25,7 @@ const focusTextEl = document.getElementById('focus-text');
 const editFocusBtn = document.getElementById('edit-focus');
 const quoteEl = document.getElementById('quote');
 const quoteAuthorEl = document.getElementById('quote-author');
+const refreshQuoteBtn = document.getElementById('refresh-quote-btn');
 const todoInput = document.getElementById('todo-input');
 const addTodoBtn = document.getElementById('add-todo-btn');
 const todoList = document.getElementById('todo-list');
@@ -112,24 +96,92 @@ function updateGreeting() {
   });
 }
 
-// Quote Functions
-function loadDailyQuote() {
-  const today = new Date().toDateString();
+// ============ QUOTE FUNCTIONS (Quotable API) ============
 
-  chrome.storage.local.get(['quoteDate', 'quoteIndex'], (result) => {
-    let quoteIndex;
+/**
+ * Fetch a quote from Quotable API
+ * @returns {Promise<Object>} Quote data with text and author
+ */
+async function fetchQuoteFromAPI() {
+  try {
+    const response = await fetch(
+      'https://api.quotable.io/random?tags=inspirational,motivational,success&maxLength=150'
+    );
 
-    if (result.quoteDate === today && result.quoteIndex !== undefined) {
-      quoteIndex = result.quoteIndex;
-    } else {
-      quoteIndex = Math.floor(Math.random() * quotes.length);
-      chrome.storage.local.set({ quoteDate: today, quoteIndex: quoteIndex });
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
     }
 
-    const quote = quotes[quoteIndex];
-    quoteEl.textContent = `"${quote.text}"`;
-    quoteAuthorEl.textContent = `— ${quote.author}`;
-  });
+    const data = await response.json();
+
+    return {
+      text: data.content,
+      author: data.author
+    };
+  } catch (error) {
+    console.error('Error fetching quote from Quotable API:', error);
+    // Return a random fallback quote
+    const randomIndex = Math.floor(Math.random() * fallbackQuotes.length);
+    return fallbackQuotes[randomIndex];
+  }
+}
+
+/**
+ * Load daily quote with caching
+ * @param {boolean} forceRefresh - Force fetch new quote regardless of cache
+ */
+async function loadDailyQuote(forceRefresh = false) {
+  const today = new Date().toDateString();
+
+  try {
+    const result = await chrome.storage.local.get(['quoteDate', 'quoteData']);
+
+    // Check if we have a cached quote from today and not forcing refresh
+    if (!forceRefresh && result.quoteDate === today && result.quoteData) {
+      displayQuote(result.quoteData);
+      return;
+    }
+
+    // Fetch new quote from API
+    const quoteData = await fetchQuoteFromAPI();
+
+    // Cache the quote data
+    await chrome.storage.local.set({
+      quoteDate: today,
+      quoteData: quoteData
+    });
+
+    displayQuote(quoteData);
+
+  } catch (error) {
+    console.error('Error loading daily quote:', error);
+    // Display a fallback quote
+    displayQuote(fallbackQuotes[0]);
+  }
+}
+
+/**
+ * Display quote on the page
+ * @param {Object} quoteData - Quote data with text and author
+ */
+function displayQuote(quoteData) {
+  quoteEl.textContent = `"${quoteData.text}"`;
+  quoteAuthorEl.textContent = `— ${quoteData.author}`;
+}
+
+/**
+ * Manually refresh the quote
+ */
+async function refreshQuote() {
+  // Add rotation animation
+  if (refreshQuoteBtn) {
+    refreshQuoteBtn.style.transform = 'rotate(360deg)';
+    setTimeout(() => {
+      refreshQuoteBtn.style.transform = '';
+    }, 300);
+  }
+
+  await loadDailyQuote(true);
 }
 
 // Focus Functions
@@ -598,6 +650,11 @@ function setupEventListeners() {
 
   // Refresh background
   refreshBgBtn.addEventListener('click', refreshBackground);
+
+  // Refresh quote
+  if (refreshQuoteBtn) {
+    refreshQuoteBtn.addEventListener('click', refreshQuote);
+  }
 
   // Close settings when clicking outside
   settingsPanel.addEventListener('click', (e) => {

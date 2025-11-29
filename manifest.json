@@ -8,7 +8,8 @@
   ],
   "host_permissions": [
     "https://api.unsplash.com/*",
-    "https://images.unsplash.com/*"
+    "https://images.unsplash.com/*",
+    "https://api.quotable.io/*"
   ],
   "chrome_url_overrides": {
     "newtab": "newtab.html"
