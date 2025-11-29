@@ -364,6 +364,27 @@ function handleGoalCheckboxChange() {
   saveGoalCompletion(isCompleted);
 }
 
+/**
+ * Toggle Upside Down mode (for testing purposes)
+ */
+function toggleUpsideDownTest() {
+  const isCurrentlyUpsideDown = document.body.classList.contains('upside-down');
+
+  if (isCurrentlyUpsideDown) {
+    // Turn off Upside Down mode
+    document.body.classList.remove('upside-down');
+    localStorage.removeItem('upsideDownActive');
+    // Reload quote to show normal quote
+    loadDailyQuote(true);
+  } else {
+    // Turn on Upside Down mode
+    document.body.classList.add('upside-down');
+    localStorage.setItem('upsideDownActive', 'true');
+    // Reload quote to show ominous quote
+    loadDailyQuote(true);
+  }
+}
+
 // ============ UNSPLASH API FUNCTIONS ============
 
 /**
@@ -734,6 +755,13 @@ function setupEventListeners() {
   settingsPanel.addEventListener('click', (e) => {
     if (e.target === settingsPanel) {
       settingsPanel.classList.remove('active');
+    }
+  });
+
+  // Test Mode: Press 'U' to toggle Upside Down mode
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'u' || e.key === 'U') {
+      toggleUpsideDownTest();
     }
   });
 }

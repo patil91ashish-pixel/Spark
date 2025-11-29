@@ -617,6 +617,24 @@ body {
   }
 }
 
+/* Test Mode Hint */
+.test-hint {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.7rem;
+  opacity: 0.3;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 50;
+  transition: opacity 0.3s ease;
+}
+
+.test-hint:hover {
+  opacity: 0.6;
+}
+
 /* ========== UPSIDE DOWN MODE ========== */
 
 /* Escape Message */
