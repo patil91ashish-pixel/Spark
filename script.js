@@ -112,9 +112,16 @@ function updateGreeting() {
  */
 async function fetchQuoteFromAPI() {
   try {
+    // Add timeout to fetch request (5 seconds)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
     const response = await fetch(
-      'https://api.quotable.io/random?tags=inspirational,motivational,success&maxLength=150'
+      'https://api.quotable.io/random?tags=inspirational,motivational,success&maxLength=150',
+      { signal: controller.signal }
     );
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`API Error: ${response.status}`);
@@ -222,11 +229,18 @@ function saveGoal() {
  */
 async function fetchUnsplashImage(apiKey) {
   try {
+    // Add timeout to fetch request (10 seconds for images)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
     const response = await fetch('https://api.unsplash.com/photos/random?orientation=landscape&query=nature', {
       headers: {
         'Authorization': `Client-ID ${apiKey}`
-      }
+      },
+      signal: controller.signal
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`API Error: ${response.status}`);
@@ -446,11 +460,18 @@ async function saveApiKey() {
     // Test the API key by making a request
     showApiKeyStatus('Testing API key...', '');
 
+    // Add timeout to API key test (10 seconds)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
     const response = await fetch('https://api.unsplash.com/photos/random', {
       headers: {
         'Authorization': `Client-ID ${apiKey}`
-      }
+      },
+      signal: controller.signal
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error('Invalid API key');
