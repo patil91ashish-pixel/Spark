@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateGreeting();
   checkDailyReset();
   loadGoalCompletion();
+  createParticles(); // Create particles for Upside Down mode
   checkUpsideDownMode();
   loadDailyQuote();
   loadGoal();
@@ -291,13 +292,19 @@ function saveGoalCompletion(isCompleted) {
 
 /**
  * Check if Upside Down mode should be active
+ * DEFAULT: Normal mode (beautiful design)
+ * Only activate Upside Down if explicitly set AND goal not complete
  */
 function checkUpsideDownMode() {
   const isUpsideDownActive = localStorage.getItem('upsideDownActive') === 'true';
   const isCompleted = localStorage.getItem('goalCompleted') === 'true';
 
+  // Only activate if explicitly flagged AND goal is incomplete
   if (isUpsideDownActive && !isCompleted) {
     activateUpsideDown();
+  } else {
+    // Default to normal mode - remove any residual upside-down class
+    document.body.classList.remove('upside-down');
   }
 }
 
@@ -382,6 +389,39 @@ function toggleUpsideDownTest() {
     localStorage.setItem('upsideDownActive', 'true');
     // Reload quote to show ominous quote
     loadDailyQuote(true);
+  }
+}
+
+/**
+ * Create floating particles for Upside Down mode
+ */
+function createParticles() {
+  const particlesContainer = document.getElementById('upside-down-particles');
+  if (!particlesContainer) return;
+
+  // Create 35 particles for dramatic effect
+  for (let i = 0; i < 35; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+
+    // Random size between 2-6px
+    const size = Math.random() * 4 + 2;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+
+    // Random horizontal position
+    particle.style.left = `${Math.random() * 100}%`;
+
+    // Random animation delay for staggered effect
+    particle.style.animationDelay = `${Math.random() * 15}s`;
+
+    // Random animation duration between 10-20 seconds
+    particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+
+    // Slightly randomize opacity
+    particle.style.opacity = Math.random() * 0.3 + 0.3;
+
+    particlesContainer.appendChild(particle);
   }
 }
 
