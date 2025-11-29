@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Tab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background-overlay"></div>
+
+  <div class="container">
+    <!-- Top Section: Time and Date -->
+    <div class="top-section">
+      <div class="time" id="time">00:00</div>
+      <div class="date" id="date">Loading...</div>
+    </div>
+
+    <!-- Middle Section: Greeting and Main Focus -->
+    <div class="middle-section">
+      <div class="greeting" id="greeting">Hello</div>
+
+      <div class="focus-section">
+        <div class="focus-question" id="focus-question">What is your main focus for today?</div>
+        <input
+          type="text"
+          class="focus-input"
+          id="focus-input"
+          placeholder="Enter your main focus..."
+          maxlength="100"
+        >
+        <div class="focus-display" id="focus-display" style="display: none;">
+          <span id="focus-text"></span>
+          <button class="edit-btn" id="edit-focus">✏️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Section: Quote and Todo -->
+    <div class="bottom-section">
+      <div class="quote-container">
+        <div class="quote" id="quote">Loading quote...</div>
+        <div class="quote-author" id="quote-author"></div>
+      </div>
+
+      <div class="todo-container">
+        <div class="todo-header">
+          <h3>Today's Tasks</h3>
+          <button class="toggle-todo" id="toggle-todo">📝</button>
+        </div>
+        <div class="todo-panel" id="todo-panel">
+          <div class="todo-input-container">
+            <input
+              type="text"
+              class="todo-input"
+              id="todo-input"
+              placeholder="Add a new task..."
+              maxlength="100"
+            >
+            <button class="add-todo-btn" id="add-todo-btn">+</button>
+          </div>
+          <ul class="todo-list" id="todo-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Button -->
+    <button class="settings-btn" id="settings-btn">⚙️</button>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settings-panel">
+      <h3>Settings</h3>
+      <div class="setting-item">
+        <label for="bg-select">Background:</label>
+        <select id="bg-select">
+          <option value="0">Nature 1</option>
+          <option value="1">Nature 2</option>
+          <option value="2">Mountains</option>
+          <option value="3">Ocean</option>
+          <option value="4">Forest</option>
+        </select>
+      </div>
+      <button class="close-settings" id="close-settings">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
