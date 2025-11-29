@@ -14,11 +14,25 @@ const fallbackQuotes = [
   { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" }
 ];
 
+// Upside Down ominous quotes (shown when in Upside Down mode)
+const upsideDownQuotes = [
+  { text: "Your time is running out...", author: "The Upside Down" },
+  { text: "The clock strikes for those who fail...", author: "Vecna" },
+  { text: "Tick tock... incomplete...", author: "The Darkness" },
+  { text: "Every unfinished task has consequences...", author: "The Shadow" },
+  { text: "You cannot hide from what you left undone...", author: "The Void" },
+  { text: "The darkness claims the unfulfilled...", author: "The Abyss" },
+  { text: "Time bends for no one...", author: "Eternity" },
+  { text: "Your goal remains... waiting...", author: "The Forgotten" }
+];
+
 // DOM Elements
 const timeEl = document.getElementById('time');
 const dateEl = document.getElementById('date');
 const greetingEl = document.getElementById('greeting');
 const focusInputEl = document.getElementById('focus-input');
+const goalCheckbox = document.getElementById('goal-checkbox');
+const escapeMessage = document.getElementById('escape-message');
 const quoteEl = document.getElementById('quote');
 const quoteAuthorEl = document.getElementById('quote-author');
 const refreshQuoteBtn = document.getElementById('refresh-quote-btn');
@@ -41,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateTime();
   updateDate();
   updateGreeting();
+  checkDailyReset();
+  loadGoalCompletion();
+  checkUpsideDownMode();
   loadDailyQuote();
   loadGoal();
   loadBackgroundMode();
@@ -51,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Update greeting every minute
   setInterval(updateGreeting, 60000);
+
+  // Check for Upside Down trigger every minute
+  setInterval(checkUpsideDownTrigger, 60000);
 });
 
 // Time and Date Functions
@@ -146,6 +166,16 @@ async function fetchQuoteFromAPI() {
  * @param {boolean} forceRefresh - Force fetch new quote regardless of cache
  */
 async function loadDailyQuote(forceRefresh = false) {
+  // Check if we're in Upside Down mode
+  const isUpsideDown = document.body.classList.contains('upside-down');
+
+  if (isUpsideDown) {
+    // Show ominous quote in Upside Down mode
+    const randomIndex = Math.floor(Math.random() * upsideDownQuotes.length);
+    displayQuote(upsideDownQuotes[randomIndex]);
+    return;
+  }
+
   const today = new Date().toDateString();
 
   try {
@@ -218,6 +248,120 @@ function loadGoal() {
 function saveGoal() {
   const goal = focusInputEl.textContent.trim();
   chrome.storage.sync.set({ mainGoal: goal });
+}
+
+// ============ UPSIDE DOWN MODE FUNCTIONS ============
+
+/**
+ * Check and reset goal completion status daily at midnight
+ */
+function checkDailyReset() {
+  const today = new Date().toDateString();
+  const stored = localStorage.getItem('goalDate');
+
+  if (stored !== today) {
+    // New day - reset goal completion
+    localStorage.setItem('goalDate', today);
+    localStorage.setItem('goalCompleted', 'false');
+    localStorage.removeItem('upsideDownActive');
+  }
+}
+
+/**
+ * Load goal completion status from localStorage
+ */
+function loadGoalCompletion() {
+  const isCompleted = localStorage.getItem('goalCompleted') === 'true';
+  if (goalCheckbox) {
+    goalCheckbox.checked = isCompleted;
+  }
+}
+
+/**
+ * Save goal completion status
+ */
+function saveGoalCompletion(isCompleted) {
+  localStorage.setItem('goalCompleted', isCompleted.toString());
+
+  if (isCompleted) {
+    // Goal completed - escape the Upside Down if active
+    escapeUpsideDown();
+  }
+}
+
+/**
+ * Check if Upside Down mode should be active
+ */
+function checkUpsideDownMode() {
+  const isUpsideDownActive = localStorage.getItem('upsideDownActive') === 'true';
+  const isCompleted = localStorage.getItem('goalCompleted') === 'true';
+
+  if (isUpsideDownActive && !isCompleted) {
+    activateUpsideDown();
+  }
+}
+
+/**
+ * Check if it's time to trigger Upside Down mode (11:59 PM)
+ */
+function checkUpsideDownTrigger() {
+  const now = new Date();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const isCompleted = localStorage.getItem('goalCompleted') === 'true';
+  const isUpsideDownActive = localStorage.getItem('upsideDownActive') === 'true';
+
+  // Trigger at 11:59 PM if goal is not complete
+  if (hour === 23 && minute === 59 && !isCompleted && !isUpsideDownActive) {
+    activateUpsideDown();
+  }
+}
+
+/**
+ * Activate Upside Down mode
+ */
+function activateUpsideDown() {
+  document.body.classList.add('upside-down');
+  localStorage.setItem('upsideDownActive', 'true');
+
+  // Reload quote to show ominous quote
+  loadDailyQuote(true);
+}
+
+/**
+ * Escape from Upside Down mode
+ */
+function escapeUpsideDown() {
+  const wasUpsideDown = document.body.classList.contains('upside-down');
+
+  if (!wasUpsideDown) {
+    return;
+  }
+
+  // Show escape message
+  escapeMessage.classList.add('show');
+
+  setTimeout(() => {
+    // Remove Upside Down mode
+    document.body.classList.remove('upside-down');
+    localStorage.removeItem('upsideDownActive');
+
+    // Hide escape message
+    setTimeout(() => {
+      escapeMessage.classList.remove('show');
+    }, 2000);
+
+    // Reload quote to show normal inspirational quote
+    loadDailyQuote(true);
+  }, 100);
+}
+
+/**
+ * Handle goal checkbox change
+ */
+function handleGoalCheckboxChange() {
+  const isCompleted = goalCheckbox.checked;
+  saveGoalCompletion(isCompleted);
 }
 
 // ============ UNSPLASH API FUNCTIONS ============
@@ -537,6 +681,11 @@ function setupEventListeners() {
   focusInputEl.addEventListener('input', () => {
     saveGoal();
   });
+
+  // Goal checkbox (Upside Down mode)
+  if (goalCheckbox) {
+    goalCheckbox.addEventListener('change', handleGoalCheckboxChange);
+  }
 
   // Settings
   settingsBtn.addEventListener('click', () => {

@@ -9,6 +9,9 @@
 <body>
   <div class="background-overlay"></div>
 
+  <!-- Escape Message -->
+  <div class="escape-message" id="escape-message">You've escaped the Upside Down</div>
+
   <div class="container">
     <!-- Top Section: Time and Date -->
     <div class="top-section">
@@ -21,12 +24,15 @@
       <div class="greeting" id="greeting">Hello</div>
 
       <div class="focus-section">
-        <div
-          class="focus-input"
-          id="focus-input"
-          contenteditable="true"
-          data-placeholder="What is your main focus for today?"
-        ></div>
+        <div class="goal-container">
+          <input type="checkbox" class="goal-checkbox" id="goal-checkbox" title="Mark goal as complete">
+          <div
+            class="focus-input"
+            id="focus-input"
+            contenteditable="true"
+            data-placeholder="What is your main focus for today?"
+          ></div>
+        </div>
       </div>
     </div>
 
