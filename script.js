@@ -601,79 +601,44 @@ function triggerCelebration(isFromUpsideDown = false) {
 
 // ============ UNSPLASH API FUNCTIONS ============
 
+// ============ UPSIDE DOWN BACKGROUND IMAGES ============
 /**
- * Fetch a creepy image for Upside Down mode from Unsplash API
- * @param {string} apiKey - Unsplash API key
- * @returns {Promise<Object>} Image data including URL
+ * Hardcoded Stranger Things / Hive Mind / Vecna background images
+ *
+ * TO CUSTOMIZE: Replace these URLs with your preferred Stranger Things images
+ * Search for: "Stranger Things hive mind", "Vecna Stranger Things", "Upside Down vines"
+ *
+ * Good sources:
+ * - https://wallpapercave.com/stranger-things-vecna-wallpapers
+ * - https://wallpaperaccess.com/stranger-things-vecna
+ * - https://wallpapersden.com/vecna-stranger-things-wallpaper/1920x1080/
+ *
+ * Right-click any image → "Copy image address" → Paste URL below
  */
-async function fetchUpsideDownImage(apiKey) {
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-    const response = await fetch('https://api.unsplash.com/photos/random?orientation=landscape&query=dark,veins,organic,red,abstract,horror,neural,network', {
-      headers: {
-        'Authorization': `Client-ID ${apiKey}`
-      },
-      signal: controller.signal
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    // Trigger download tracking
-    if (data.links && data.links.download_location) {
-      fetch(data.links.download_location, {
-        headers: {
-          'Authorization': `Client-ID ${apiKey}`
-        }
-      });
-    }
-
-    return {
-      url: data.urls.full + '&w=1920&q=80'
-    };
-  } catch (error) {
-    console.error('Error fetching Upside Down image:', error);
-    throw error;
-  }
-}
+const upsideDownImages = [
+  // Dark atmospheric images with organic/vein-like patterns
+  // REPLACE THESE with actual Stranger Things/Vecna images from the sources above
+  'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1920&q=80', // Dark veins abstract
+  'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=1920&q=80', // Red dark abstract
+  'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=1920&q=80', // Dark organic tendrils
+  'https://images.unsplash.com/photo-1509699959821-2e607e5ae224?w=1920&q=80', // Dark red lightning
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&q=80'  // Dark atmospheric
+];
 
 /**
  * Load and apply Upside Down background image
+ * Randomly selects from hardcoded image array
  */
 async function loadUpsideDownBackground() {
   try {
-    const result = await chrome.storage.sync.get(['unsplashApiKey']);
-    const apiKey = result.unsplashApiKey;
+    // Randomly pick one image from the array
+    const randomIndex = Math.floor(Math.random() * upsideDownImages.length);
+    const imageUrl = upsideDownImages[randomIndex];
 
-    if (!apiKey) {
-      // No API key - use CSS gradient background already in place
-      return;
-    }
+    // Set as CSS custom property for ::after pseudo-element
+    document.body.style.setProperty('--upside-down-bg', `url('${imageUrl}')`);
 
-    // Check if we have a cached Upside Down image
-    const cachedData = await chrome.storage.local.get(['upsideDownImageUrl']);
-
-    if (cachedData.upsideDownImageUrl) {
-      // Use cached image - set as CSS custom property for ::after pseudo-element
-      document.body.style.setProperty('--upside-down-bg', `url('${cachedData.upsideDownImageUrl}')`);
-    } else {
-      // Fetch new creepy image
-      const imageData = await fetchUpsideDownImage(apiKey);
-
-      // Cache it
-      await chrome.storage.local.set({
-        upsideDownImageUrl: imageData.url
-      });
-
-      document.body.style.setProperty('--upside-down-bg', `url('${imageData.url}')`);
-    }
+    console.log(`Loaded Upside Down background: Image ${randomIndex + 1}/${upsideDownImages.length}`);
   } catch (error) {
     console.error('Error loading Upside Down background:', error);
     // Fallback to CSS gradient (already in place)
