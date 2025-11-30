@@ -92,6 +92,15 @@ const upsideDownQuotes = [
   { text: "Your goal remains... waiting...", author: "The Forgotten" }
 ];
 
+// Success messages for goal completion celebration
+const successMessages = [
+  '🎉 Goal crushed!',
+  '🔥 You did it!',
+  '✨ Amazing work!',
+  '💪 Goal completed!',
+  '⭐ Crushing it!'
+];
+
 // DOM Elements
 const timeEl = document.getElementById('time');
 const dateEl = document.getElementById('date');
@@ -99,6 +108,8 @@ const greetingEl = document.getElementById('greeting');
 const focusInputEl = document.getElementById('focus-input');
 const goalCheckbox = document.getElementById('goal-checkbox');
 const escapeMessage = document.getElementById('escape-message');
+const successMessage = document.getElementById('success-message');
+const celebrationContainer = document.getElementById('celebration-container');
 const quoteEl = document.getElementById('quote');
 const quoteAuthorEl = document.getElementById('quote-author');
 const refreshQuoteBtn = document.getElementById('refresh-quote-btn');
@@ -322,10 +333,8 @@ function loadGoalCompletion() {
 function saveGoalCompletion(isCompleted) {
   localStorage.setItem('goalCompleted', isCompleted.toString());
 
-  if (isCompleted) {
-    // Goal completed - escape the Upside Down if active
-    escapeUpsideDown();
-  }
+  // Note: Upside Down escape is now handled by the celebration animation
+  // See triggerCelebration() function
 }
 
 /**
@@ -406,6 +415,15 @@ function escapeUpsideDown() {
  */
 function handleGoalCheckboxChange() {
   const isCompleted = goalCheckbox.checked;
+
+  // Only trigger celebration when CHECKING (completing) the goal, not unchecking
+  if (isCompleted) {
+    const isUpsideDown = document.body.classList.contains('upside-down');
+
+    // Trigger celebration (with special handling for Upside Down mode)
+    triggerCelebration(isUpsideDown);
+  }
+
   saveGoalCompletion(isCompleted);
 }
 
@@ -460,6 +478,96 @@ function createParticles() {
     particle.style.opacity = Math.random() * 0.3 + 0.3;
 
     particlesContainer.appendChild(particle);
+  }
+}
+
+// ============ CELEBRATION FUNCTIONS ============
+
+/**
+ * Create confetti particles for celebration
+ */
+function createConfetti() {
+  if (!celebrationContainer) return;
+
+  const colors = ['#FFD700', '#4169E1', '#FF4444', '#32CD32', '#9370DB', '#FF69B4'];
+  const shapes = ['circle', 'square', 'triangle'];
+  const particleCount = Math.floor(Math.random() * 51) + 50; // 50-100 particles
+
+  for (let i = 0; i < particleCount; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = `confetti ${shapes[Math.floor(Math.random() * shapes.length)]}`;
+
+    // Random color
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.backgroundColor = color;
+    confetti.style.color = color;
+
+    // Random size between 8-15px
+    const size = Math.random() * 7 + 8;
+    if (!confetti.classList.contains('triangle')) {
+      confetti.style.width = `${size}px`;
+      confetti.style.height = `${size}px`;
+    }
+
+    // Start from center-ish area
+    const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 200;
+    confetti.style.left = `${startX}px`;
+    confetti.style.top = `${window.innerHeight / 2}px`;
+
+    // Random horizontal drift
+    const drift = (Math.random() - 0.5) * 400;
+    confetti.style.setProperty('--drift', `${drift}px`);
+
+    // Random animation delay for staggered effect
+    confetti.style.animationDelay = `${Math.random() * 0.3}s`;
+
+    // Random animation duration between 2.5-3.5 seconds
+    confetti.style.animationDuration = `${Math.random() + 2.5}s`;
+
+    celebrationContainer.appendChild(confetti);
+  }
+
+  // Clean up confetti after animation completes
+  setTimeout(() => {
+    celebrationContainer.innerHTML = '';
+  }, 4000);
+}
+
+/**
+ * Show success message with random quote
+ */
+function showSuccessMessage() {
+  if (!successMessage) return;
+
+  // Pick random success message
+  const randomIndex = Math.floor(Math.random() * successMessages.length);
+  successMessage.textContent = successMessages[randomIndex];
+
+  // Show message
+  successMessage.classList.add('show');
+
+  // Hide message after 2 seconds
+  setTimeout(() => {
+    successMessage.classList.remove('show');
+  }, 2000);
+}
+
+/**
+ * Trigger celebration animation
+ * @param {boolean} isFromUpsideDown - Whether celebration is triggered from Upside Down mode
+ */
+function triggerCelebration(isFromUpsideDown = false) {
+  // Create confetti
+  createConfetti();
+
+  // Show success message
+  showSuccessMessage();
+
+  // If in Upside Down mode, escape after celebration
+  if (isFromUpsideDown) {
+    setTimeout(() => {
+      escapeUpsideDown();
+    }, 2500); // Wait for celebration to finish before showing escape message
   }
 }
 
