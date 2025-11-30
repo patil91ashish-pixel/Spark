@@ -630,12 +630,15 @@ async function loadUpsideDownBackground() {
   try {
     // Randomly pick one image from the array
     const randomIndex = Math.floor(Math.random() * upsideDownImages.length);
-    const imageUrl = upsideDownImages[randomIndex];
+    const imagePath = upsideDownImages[randomIndex];
+
+    // Convert relative path to absolute chrome-extension:// URL
+    const imageUrl = chrome.runtime.getURL(imagePath);
 
     // Set as CSS custom property for ::after pseudo-element
     document.body.style.setProperty('--upside-down-bg', `url('${imageUrl}')`);
 
-    console.log(`Loaded Upside Down background: ${imageUrl} (${randomIndex + 1}/${upsideDownImages.length})`);
+    console.log(`Loaded Upside Down background: ${imagePath} -> ${imageUrl} (${randomIndex + 1}/${upsideDownImages.length})`);
   } catch (error) {
     console.error('Error loading Upside Down background:', error);
     // Fallback to CSS gradient (already in place)
