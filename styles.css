@@ -815,32 +815,40 @@ body.upside-down .container {
   animation: subtle-jitter 0.15s infinite;
 }
 
-/* Dark, oppressive overlay */
+/* Dark, oppressive overlay with pulsing vignette */
 body.upside-down .background-overlay {
   background:
-    /* Heavy vignette - closing in */
-    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.7) 70%, rgba(0, 0, 0, 0.95) 100%),
+    /* Heavy pulsing vignette - closing in */
+    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.75) 65%, rgba(0, 0, 0, 0.98) 100%),
+    /* Red glow from edges */
+    radial-gradient(ellipse at center, transparent 50%, rgba(139, 0, 0, 0.15) 80%, rgba(139, 0, 0, 0.3) 100%),
     /* Sickly green tint in some areas */
-    radial-gradient(ellipse at 30% 40%, rgba(13, 77, 77, 0.1) 0%, transparent 40%),
-    radial-gradient(ellipse at 70% 60%, rgba(13, 77, 77, 0.08) 0%, transparent 35%);
+    radial-gradient(ellipse at 30% 40%, rgba(13, 77, 77, 0.12) 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 60%, rgba(13, 77, 77, 0.1) 0%, transparent 35%);
   transition: all 2s ease;
   z-index: 1;
+  animation: vignette-pulse 5s ease-in-out infinite;
 }
 
-/* CREEPY TEXT EFFECTS - Heavy glitch and corruption */
+/* CREEPY TEXT EFFECTS - EXTREME RGB split and corruption */
 body.upside-down .time {
   color: #8b0000;
   font-size: 11rem;
   text-shadow:
-    4px 0 0 rgba(255, 0, 0, 0.9),
-    -4px 0 0 rgba(0, 255, 255, 0.7),
-    2px 0 0 rgba(255, 0, 0, 0.6),
-    -2px 0 0 rgba(0, 255, 255, 0.5),
-    0 0 40px rgba(139, 0, 0, 1),
-    0 0 60px rgba(139, 0, 0, 0.8),
-    0 0 80px rgba(139, 0, 0, 0.6);
+    /* Extreme RGB split */
+    6px 2px 0 rgba(255, 0, 0, 1),
+    -6px -2px 0 rgba(0, 255, 255, 0.8),
+    3px 1px 0 rgba(255, 0, 0, 0.7),
+    -3px -1px 0 rgba(0, 255, 255, 0.6),
+    /* Massive red glow */
+    0 0 50px rgba(139, 0, 0, 1),
+    0 0 80px rgba(139, 0, 0, 0.9),
+    0 0 120px rgba(139, 0, 0, 0.7),
+    /* Additional corruption layers */
+    2px -2px 0 rgba(255, 100, 100, 0.5),
+    -2px 2px 0 rgba(100, 255, 255, 0.4);
   animation: heavy-glitch-rgb 2s infinite, flicker-unstable 3s infinite, text-jitter 0.1s infinite;
-  filter: blur(0.3px);
+  filter: blur(0.4px) contrast(1.2);
 }
 
 body.upside-down .date {
@@ -946,36 +954,37 @@ body.upside-down .vecna-presence {
   opacity: 1;
 }
 
-/* Vecna Eyes - Glowing red menacing eyes */
+/* Vecna Eyes - LARGE glowing red menacing eyes */
 .vecna-eyes {
   position: absolute;
-  top: 15%;
+  top: 12%;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 80px;
-  filter: blur(1px);
+  width: 280px;
+  height: 100px;
+  filter: blur(0.5px);
 }
 
 .vecna-eye {
   position: absolute;
-  width: 30px;
-  height: 40px;
-  background: radial-gradient(ellipse at center, #ff0000 0%, #8b0000 40%, transparent 70%);
+  width: 50px;
+  height: 65px;
+  background: radial-gradient(ellipse at center, #ff0000 0%, #ff0000 20%, #8b0000 45%, rgba(139, 0, 0, 0.5) 70%, transparent 90%);
   border-radius: 50%;
   animation: eye-glow 3s ease-in-out infinite, eye-follow 8s ease-in-out infinite;
   box-shadow:
-    0 0 30px rgba(255, 0, 0, 0.8),
-    0 0 60px rgba(139, 0, 0, 0.6),
-    inset 0 0 10px rgba(255, 0, 0, 0.9);
+    0 0 40px rgba(255, 0, 0, 1),
+    0 0 80px rgba(255, 0, 0, 0.8),
+    0 0 120px rgba(139, 0, 0, 0.6),
+    inset 0 0 15px rgba(255, 0, 0, 1);
 }
 
 .vecna-eye.left {
-  left: 30px;
+  left: 20px;
 }
 
 .vecna-eye.right {
-  right: 30px;
+  right: 20px;
 }
 
 /* Vecna Silhouette - Shadowy menacing figure */
@@ -993,29 +1002,35 @@ body.upside-down .vecna-presence {
 
 /* ========== VECNA MESSAGE ========== */
 
-/* Vecna's Message - Hidden by default */
+/* Vecna's Message - URGENT and OMINOUS */
 .vecna-message {
   position: fixed;
   bottom: 15%;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 32px;
-  font-weight: 600;
-  color: #cc0000;
+  font-size: 36px;
+  font-weight: 700;
+  color: #ff3333;
   text-shadow:
-    0 0 20px rgba(139, 0, 0, 1),
-    0 0 40px rgba(139, 0, 0, 0.8),
-    0 0 60px rgba(139, 0, 0, 0.6),
-    2px 0 0 rgba(255, 0, 0, 0.5),
-    -1px 0 0 rgba(13, 77, 77, 0.3);
+    /* Massive red glow */
+    0 0 30px rgba(255, 0, 0, 1),
+    0 0 60px rgba(255, 0, 0, 0.9),
+    0 0 90px rgba(139, 0, 0, 0.8),
+    0 0 120px rgba(139, 0, 0, 0.6),
+    /* RGB split for corruption */
+    3px 0 0 rgba(255, 0, 0, 0.6),
+    -2px 0 0 rgba(13, 77, 77, 0.4),
+    /* Shadow for depth */
+    0 4px 20px rgba(0, 0, 0, 0.8);
   z-index: 100;
   opacity: 0;
   pointer-events: none;
   transition: opacity 2s ease;
-  animation: message-pulse 4s ease-in-out infinite, text-jitter 0.2s infinite;
+  animation: message-pulse-urgent 3s ease-in-out infinite, text-jitter 0.2s infinite, message-flicker 8s infinite;
   text-align: center;
   max-width: 80%;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  filter: contrast(1.3);
 }
 
 body.upside-down .vecna-message {
@@ -1142,23 +1157,29 @@ body.upside-down .upside-down-particles {
   filter: blur(1px);
 }
 
-/* Particle color variations - red and grey tones */
-.particle:nth-child(3n) {
-  background: radial-gradient(circle at center, rgba(139, 0, 0, 0.6) 0%, rgba(139, 0, 0, 0.3) 50%, transparent 100%);
-  box-shadow: 0 0 15px rgba(139, 0, 0, 0.4);
+/* Particle color variations - more visible red, grey, and white tones */
+.particle:nth-child(4n) {
+  background: radial-gradient(circle at center, rgba(255, 100, 100, 0.8) 0%, rgba(139, 0, 0, 0.5) 50%, transparent 100%);
+  box-shadow: 0 0 20px rgba(255, 50, 50, 0.6), 0 0 10px rgba(139, 0, 0, 0.4);
   animation: organic-float 15s infinite ease-in-out, particle-pulse-red 3s infinite ease-in-out;
 }
 
-.particle:nth-child(3n+1) {
-  background: radial-gradient(circle at center, rgba(102, 102, 102, 0.5) 0%, rgba(80, 80, 80, 0.3) 50%, transparent 100%);
-  box-shadow: 0 0 10px rgba(102, 102, 102, 0.3);
+.particle:nth-child(4n+1) {
+  background: radial-gradient(circle at center, rgba(200, 200, 200, 0.7) 0%, rgba(150, 150, 150, 0.4) 50%, transparent 100%);
+  box-shadow: 0 0 15px rgba(180, 180, 180, 0.4);
   animation: organic-float 18s infinite ease-in-out;
 }
 
-.particle:nth-child(3n+2) {
-  background: radial-gradient(circle at center, rgba(139, 0, 0, 0.4) 0%, rgba(102, 0, 0, 0.2) 50%, transparent 100%);
-  box-shadow: 0 0 12px rgba(139, 0, 0, 0.3);
-  animation: organic-float 20s infinite ease-in-out, particle-pulse-red 4s infinite ease-in-out;
+.particle:nth-child(4n+2) {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, rgba(200, 200, 200, 0.3) 50%, transparent 100%);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.5);
+  animation: organic-float 20s infinite ease-in-out;
+}
+
+.particle:nth-child(4n+3) {
+  background: radial-gradient(circle at center, rgba(180, 50, 50, 0.7) 0%, rgba(120, 30, 30, 0.4) 50%, transparent 100%);
+  box-shadow: 0 0 16px rgba(180, 50, 50, 0.5);
+  animation: organic-float 22s infinite ease-in-out, particle-pulse-red 4s infinite ease-in-out;
 }
 
 /* RGB Split Glitch Animation */
@@ -1367,37 +1388,64 @@ body.upside-down .upside-down-particles {
   90% { opacity: 0.9; }
 }
 
-/* Vecna Message Pulse */
-@keyframes message-pulse {
+/* Vecna Message Pulse - URGENT version */
+@keyframes message-pulse-urgent {
   0%, 100% {
     transform: translateX(-50%) scale(1);
     text-shadow:
-      0 0 20px rgba(139, 0, 0, 1),
-      0 0 40px rgba(139, 0, 0, 0.8),
-      0 0 60px rgba(139, 0, 0, 0.6);
+      0 0 30px rgba(255, 0, 0, 1),
+      0 0 60px rgba(255, 0, 0, 0.9),
+      0 0 90px rgba(139, 0, 0, 0.8),
+      0 0 120px rgba(139, 0, 0, 0.6),
+      3px 0 0 rgba(255, 0, 0, 0.6),
+      -2px 0 0 rgba(13, 77, 77, 0.4);
   }
   50% {
-    transform: translateX(-50%) scale(1.02);
+    transform: translateX(-50%) scale(1.05);
     text-shadow:
-      0 0 30px rgba(139, 0, 0, 1),
-      0 0 60px rgba(139, 0, 0, 0.9),
-      0 0 90px rgba(139, 0, 0, 0.7);
+      0 0 50px rgba(255, 0, 0, 1),
+      0 0 100px rgba(255, 0, 0, 1),
+      0 0 150px rgba(139, 0, 0, 0.9),
+      0 0 200px rgba(139, 0, 0, 0.7),
+      4px 0 0 rgba(255, 0, 0, 0.8),
+      -3px 0 0 rgba(13, 77, 77, 0.5);
   }
 }
 
-/* Vecna Eye Glow */
+/* Message Flicker */
+@keyframes message-flicker {
+  0%, 90%, 100% { opacity: 1; }
+  91% { opacity: 0.7; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+}
+
+/* Vignette Pulse - Closing in effect */
+@keyframes vignette-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* Vecna Eye Glow - INTENSE */
 @keyframes eye-glow {
   0%, 100% {
     box-shadow:
-      0 0 30px rgba(255, 0, 0, 0.8),
-      0 0 60px rgba(139, 0, 0, 0.6),
-      inset 0 0 10px rgba(255, 0, 0, 0.9);
+      0 0 40px rgba(255, 0, 0, 1),
+      0 0 80px rgba(255, 0, 0, 0.9),
+      0 0 120px rgba(139, 0, 0, 0.7),
+      inset 0 0 15px rgba(255, 0, 0, 1);
   }
   50% {
     box-shadow:
-      0 0 50px rgba(255, 0, 0, 1),
-      0 0 100px rgba(139, 0, 0, 0.8),
-      inset 0 0 15px rgba(255, 0, 0, 1);
+      0 0 60px rgba(255, 0, 0, 1),
+      0 0 120px rgba(255, 0, 0, 1),
+      0 0 180px rgba(139, 0, 0, 0.9),
+      inset 0 0 25px rgba(255, 0, 0, 1);
   }
 }
 

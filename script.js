@@ -455,11 +455,8 @@ function toggleUpsideDownTest() {
     // Reload quote to show normal quote
     loadDailyQuote(true);
   } else {
-    // Turn on Upside Down mode
-    document.body.classList.add('upside-down');
-    localStorage.setItem('upsideDownActive', 'true');
-    // Reload quote to show ominous quote
-    loadDailyQuote(true);
+    // Turn on Upside Down mode - use the proper activation function
+    activateUpsideDown();
   }
 }
 
