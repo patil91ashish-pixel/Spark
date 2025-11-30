@@ -828,9 +828,9 @@ body.upside-down::after {
 
 body.upside-down .container {
   /* FLIP THE PAGE UPSIDE DOWN - literally rotate 180 degrees */
-  transform: rotate(180deg);
-  transition: transform 1.5s ease, all 1.5s ease;
-  animation: subtle-jitter 0.15s infinite;
+  /* Rotation is combined with jitter in the animation keyframes */
+  animation: subtle-jitter-upside-down 0.15s infinite;
+  transition: all 1.5s ease;
 }
 
 /* Dark, oppressive overlay with pulsing vignette */
@@ -1309,6 +1309,22 @@ body.upside-down .upside-down-particles {
   }
   75% {
     transform: translate(-0.3px, -0.3px);
+  }
+}
+
+/* Subtle jitter animation WITH 180-degree rotation for Upside Down mode */
+@keyframes subtle-jitter-upside-down {
+  0%, 100% {
+    transform: rotate(180deg) translate(0, 0);
+  }
+  25% {
+    transform: rotate(180deg) translate(-0.5px, 0.5px);
+  }
+  50% {
+    transform: rotate(180deg) translate(0.5px, -0.5px);
+  }
+  75% {
+    transform: rotate(180deg) translate(-0.3px, -0.3px);
   }
 }
 
