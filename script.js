@@ -7,11 +7,77 @@ const backgrounds = [
   'https://images.unsplash.com/photo-1511497584788-876760111969?w=1920&q=80', // Forest path
 ];
 
-// Fallback quotes (used if Quotable API fails)
-const fallbackQuotes = [
+// Curated inspirational quotes from specific personalities
+const inspirationalQuotes = [
+  // Steve Jobs (12 quotes)
   { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-  { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-  { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" }
+  { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+  { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
+  { text: "Stay hungry, stay foolish.", author: "Steve Jobs" },
+  { text: "Design is not just what it looks like and feels like. Design is how it works.", author: "Steve Jobs" },
+  { text: "The people who are crazy enough to think they can change the world are the ones who do.", author: "Steve Jobs" },
+  { text: "Don't let the noise of others' opinions drown out your own inner voice.", author: "Steve Jobs" },
+  { text: "Sometimes life hits you in the head with a brick. Don't lose faith.", author: "Steve Jobs" },
+  { text: "Quality is more important than quantity. One home run is much better than two doubles.", author: "Steve Jobs" },
+  { text: "Simple can be harder than complex: You have to work hard to get your thinking clean to make it simple.", author: "Steve Jobs" },
+  { text: "I'm convinced that about half of what separates successful entrepreneurs from non-successful ones is pure perseverance.", author: "Steve Jobs" },
+  { text: "Remembering that you are going to die is the best way I know to avoid the trap of thinking you have something to lose.", author: "Steve Jobs" },
+
+  // Winston Churchill (12 quotes)
+  { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+  { text: "We make a living by what we get, but we make a life by what we give.", author: "Winston Churchill" },
+  { text: "Attitude is a little thing that makes a big difference.", author: "Winston Churchill" },
+  { text: "The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty.", author: "Winston Churchill" },
+  { text: "To improve is to change; to be perfect is to change often.", author: "Winston Churchill" },
+  { text: "Success consists of going from failure to failure without loss of enthusiasm.", author: "Winston Churchill" },
+  { text: "Courage is what it takes to stand up and speak; courage is also what it takes to sit down and listen.", author: "Winston Churchill" },
+  { text: "If you're going through hell, keep going.", author: "Winston Churchill" },
+  { text: "The price of greatness is responsibility.", author: "Winston Churchill" },
+  { text: "We are masters of the unsaid words, but slaves of those we let slip out.", author: "Winston Churchill" },
+  { text: "Continuous effort - not strength or intelligence - is the key to unlocking our potential.", author: "Winston Churchill" },
+  { text: "Never, never, never give up.", author: "Winston Churchill" },
+
+  // Naval Ravikant (12 quotes)
+  { text: "A calm mind, a fit body, a house full of love. These things cannot be bought — they must be earned.", author: "Naval Ravikant" },
+  { text: "All the returns in life come from compound interest over many turns of the game.", author: "Naval Ravikant" },
+  { text: "The genuine love for reading itself, when cultivated, is a superpower.", author: "Naval Ravikant" },
+  { text: "Seek wealth, not money or status. Wealth is having assets that earn while you sleep.", author: "Naval Ravikant" },
+  { text: "Play long-term games with long-term people.", author: "Naval Ravikant" },
+  { text: "The most important skill for getting rich is becoming a perpetual learner.", author: "Naval Ravikant" },
+  { text: "Happiness is a choice you make and a skill you develop.", author: "Naval Ravikant" },
+  { text: "Specific knowledge is found by pursuing your genuine curiosity and passion rather than whatever is hot right now.", author: "Naval Ravikant" },
+  { text: "Clear thinker, better speaker. Unclear thinker, worse speaker.", author: "Naval Ravikant" },
+  { text: "Reading is faster than listening. Doing is faster than watching.", author: "Naval Ravikant" },
+  { text: "The three big ones in life are wealth, health, and happiness. We pursue them in that order, but their importance is reverse.", author: "Naval Ravikant" },
+  { text: "If you can't see yourself working with someone for life, don't work with them for a day.", author: "Naval Ravikant" },
+
+  // Bruce Lee (12 quotes)
+  { text: "Be water, my friend.", author: "Bruce Lee" },
+  { text: "The successful warrior is the average man, with laser-like focus.", author: "Bruce Lee" },
+  { text: "Knowing is not enough, we must apply. Willing is not enough, we must do.", author: "Bruce Lee" },
+  { text: "Absorb what is useful, discard what is not, add what is uniquely your own.", author: "Bruce Lee" },
+  { text: "I fear not the man who has practiced 10,000 kicks once, but I fear the man who has practiced one kick 10,000 times.", author: "Bruce Lee" },
+  { text: "A wise man can learn more from a foolish question than a fool can learn from a wise answer.", author: "Bruce Lee" },
+  { text: "The key to immortality is first living a life worth remembering.", author: "Bruce Lee" },
+  { text: "Mistakes are always forgivable, if one has the courage to admit them.", author: "Bruce Lee" },
+  { text: "If you spend too much time thinking about a thing, you'll never get it done.", author: "Bruce Lee" },
+  { text: "Real living is living for others.", author: "Bruce Lee" },
+  { text: "Do not pray for an easy life, pray for the strength to endure a difficult one.", author: "Bruce Lee" },
+  { text: "The more we value things, the less we value ourselves.", author: "Bruce Lee" },
+
+  // Marcus Aurelius (12 quotes)
+  { text: "The happiness of your life depends upon the quality of your thoughts.", author: "Marcus Aurelius" },
+  { text: "You have power over your mind - not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius" },
+  { text: "Waste no more time arguing about what a good man should be. Be one.", author: "Marcus Aurelius" },
+  { text: "The best revenge is to be unlike him who performed the injury.", author: "Marcus Aurelius" },
+  { text: "When you arise in the morning, think of what a precious privilege it is to be alive - to breathe, to think, to enjoy, to love.", author: "Marcus Aurelius" },
+  { text: "The soul becomes dyed with the color of its thoughts.", author: "Marcus Aurelius" },
+  { text: "If it is not right, do not do it. If it is not true, do not say it.", author: "Marcus Aurelius" },
+  { text: "Very little is needed to make a happy life; it is all within yourself, in your way of thinking.", author: "Marcus Aurelius" },
+  { text: "The impediment to action advances action. What stands in the way becomes the way.", author: "Marcus Aurelius" },
+  { text: "You could leave life right now. Let that determine what you do and say and think.", author: "Marcus Aurelius" },
+  { text: "The universe is change; our life is what our thoughts make it.", author: "Marcus Aurelius" },
+  { text: "Confine yourself to the present.", author: "Marcus Aurelius" }
 ];
 
 // Upside Down ominous quotes (shown when in Upside Down mode)
@@ -125,42 +191,7 @@ function updateGreeting() {
   });
 }
 
-// ============ QUOTE FUNCTIONS (Quotable API) ============
-
-/**
- * Fetch a quote from Quotable API
- * @returns {Promise<Object>} Quote data with text and author
- */
-async function fetchQuoteFromAPI() {
-  try {
-    // Add timeout to fetch request (5 seconds)
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-    const response = await fetch(
-      'https://api.quotable.io/random?tags=inspirational,motivational,success&maxLength=150',
-      { signal: controller.signal }
-    );
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    return {
-      text: data.content,
-      author: data.author
-    };
-  } catch (error) {
-    console.error('Error fetching quote from Quotable API:', error);
-    // Return a random fallback quote
-    const randomIndex = Math.floor(Math.random() * fallbackQuotes.length);
-    return fallbackQuotes[randomIndex];
-  }
-}
+// ============ QUOTE FUNCTIONS (LOCAL CURATED COLLECTION) ============
 
 /**
  * Load daily quote with caching
@@ -178,32 +209,25 @@ async function loadDailyQuote(forceRefresh = false) {
   }
 
   const today = new Date().toDateString();
+  const result = await chrome.storage.local.get(['quoteDate', 'quoteData']);
 
-  try {
-    const result = await chrome.storage.local.get(['quoteDate', 'quoteData']);
-
-    // Check if we have a cached quote from today and not forcing refresh
-    if (!forceRefresh && result.quoteDate === today && result.quoteData) {
-      displayQuote(result.quoteData);
-      return;
-    }
-
-    // Fetch new quote from API
-    const quoteData = await fetchQuoteFromAPI();
-
-    // Cache the quote data
-    await chrome.storage.local.set({
-      quoteDate: today,
-      quoteData: quoteData
-    });
-
-    displayQuote(quoteData);
-
-  } catch (error) {
-    console.error('Error loading daily quote:', error);
-    // Display a fallback quote
-    displayQuote(fallbackQuotes[0]);
+  // Check if we have a cached quote from today and not forcing refresh
+  if (!forceRefresh && result.quoteDate === today && result.quoteData) {
+    displayQuote(result.quoteData);
+    return;
   }
+
+  // Pick a new random quote from our curated collection
+  const randomIndex = Math.floor(Math.random() * inspirationalQuotes.length);
+  const quoteData = inspirationalQuotes[randomIndex];
+
+  // Cache the quote data for the day
+  await chrome.storage.local.set({
+    quoteDate: today,
+    quoteData: quoteData
+  });
+
+  displayQuote(quoteData);
 }
 
 /**
