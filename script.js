@@ -372,13 +372,28 @@ function checkUpsideDownTrigger() {
 }
 
 /**
+ * Update Vecna message with ominous quote
+ */
+function updateVecnaMessage() {
+  const vecnaMessageEl = document.getElementById('vecna-message');
+  if (!vecnaMessageEl) return;
+
+  // Rotate between ominous quotes from upsideDownQuotes
+  const randomIndex = Math.floor(Math.random() * upsideDownQuotes.length);
+  vecnaMessageEl.textContent = upsideDownQuotes[randomIndex].text;
+}
+
+/**
  * Activate Upside Down mode
  */
 function activateUpsideDown() {
   document.body.classList.add('upside-down');
   localStorage.setItem('upsideDownActive', 'true');
 
-  // Reload quote to show ominous quote
+  // Update Vecna message
+  updateVecnaMessage();
+
+  // Reload quote to show ominous quote (for bottom quote section if visible)
   loadDailyQuote(true);
 }
 
@@ -449,19 +464,21 @@ function toggleUpsideDownTest() {
 }
 
 /**
- * Create floating particles for Upside Down mode
+ * Create organic floating particles for Upside Down mode (50-100 particles)
  */
 function createParticles() {
   const particlesContainer = document.getElementById('upside-down-particles');
   if (!particlesContainer) return;
 
-  // Create 35 particles for dramatic effect
-  for (let i = 0; i < 35; i++) {
+  // Create 50-100 organic particles for creepy effect
+  const particleCount = Math.floor(Math.random() * 51) + 50; // 50-100 particles
+
+  for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
     particle.className = 'particle';
 
-    // Random size between 2-6px
-    const size = Math.random() * 4 + 2;
+    // Varying sizes between 3-8px for organic feel
+    const size = Math.random() * 5 + 3;
     particle.style.width = `${size}px`;
     particle.style.height = `${size}px`;
 
@@ -469,13 +486,13 @@ function createParticles() {
     particle.style.left = `${Math.random() * 100}%`;
 
     // Random animation delay for staggered effect
-    particle.style.animationDelay = `${Math.random() * 15}s`;
+    particle.style.animationDelay = `${Math.random() * 20}s`;
 
-    // Random animation duration between 10-20 seconds
-    particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+    // Random animation duration between 15-25 seconds (slower, eerier)
+    particle.style.animationDuration = `${Math.random() * 10 + 15}s`;
 
-    // Slightly randomize opacity
-    particle.style.opacity = Math.random() * 0.3 + 0.3;
+    // Varying opacity for depth
+    particle.style.opacity = Math.random() * 0.4 + 0.3;
 
     particlesContainer.appendChild(particle);
   }
