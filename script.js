@@ -264,6 +264,7 @@ function loadGoal() {
     if (result.mainGoal) {
       focusInputEl.textContent = result.mainGoal;
     }
+    updateCheckboxVisibility();
   });
 }
 
@@ -273,6 +274,19 @@ function loadGoal() {
 function saveGoal() {
   const goal = focusInputEl.textContent.trim();
   chrome.storage.sync.set({ mainGoal: goal });
+  updateCheckboxVisibility();
+}
+
+/**
+ * Update checkbox visibility based on whether goal exists
+ */
+function updateCheckboxVisibility() {
+  const hasGoal = focusInputEl.textContent.trim().length > 0;
+  if (hasGoal) {
+    goalCheckbox.classList.add('visible');
+  } else {
+    goalCheckbox.classList.remove('visible');
+  }
 }
 
 // ============ UPSIDE DOWN MODE FUNCTIONS ============
