@@ -342,13 +342,13 @@ function saveGoalCompletion(isCompleted) {
  * DEFAULT: Normal mode (beautiful design)
  * Only activate Upside Down if explicitly set AND goal not complete
  */
-function checkUpsideDownMode() {
+async function checkUpsideDownMode() {
   const isUpsideDownActive = localStorage.getItem('upsideDownActive') === 'true';
   const isCompleted = localStorage.getItem('goalCompleted') === 'true';
 
   // Only activate if explicitly flagged AND goal is incomplete
   if (isUpsideDownActive && !isCompleted) {
-    activateUpsideDown();
+    await activateUpsideDown();
   } else {
     // Default to normal mode - remove any residual upside-down class
     document.body.classList.remove('upside-down');
@@ -386,9 +386,12 @@ function updateVecnaMessage() {
 /**
  * Activate Upside Down mode
  */
-function activateUpsideDown() {
+async function activateUpsideDown() {
   document.body.classList.add('upside-down');
   localStorage.setItem('upsideDownActive', 'true');
+
+  // Load creepy Upside Down background image
+  await loadUpsideDownBackground();
 
   // Update Vecna message
   updateVecnaMessage();
@@ -400,7 +403,7 @@ function activateUpsideDown() {
 /**
  * Escape from Upside Down mode
  */
-function escapeUpsideDown() {
+async function escapeUpsideDown() {
   const wasUpsideDown = document.body.classList.contains('upside-down');
 
   if (!wasUpsideDown) {
@@ -410,10 +413,21 @@ function escapeUpsideDown() {
   // Show escape message
   escapeMessage.classList.add('show');
 
-  setTimeout(() => {
+  setTimeout(async () => {
     // Remove Upside Down mode
     document.body.classList.remove('upside-down');
     localStorage.removeItem('upsideDownActive');
+
+    // Restore normal background
+    const result = await chrome.storage.sync.get(['backgroundMode']);
+    const mode = result.backgroundMode || 'unsplash';
+    if (mode === 'unsplash') {
+      await loadUnsplashBackground();
+    } else {
+      const bgResult = await chrome.storage.sync.get(['backgroundIndex']);
+      const bgIndex = bgResult.backgroundIndex !== undefined ? bgResult.backgroundIndex : 0;
+      setStaticBackground(bgIndex);
+    }
 
     // Hide escape message
     setTimeout(() => {
@@ -586,6 +600,85 @@ function triggerCelebration(isFromUpsideDown = false) {
 }
 
 // ============ UNSPLASH API FUNCTIONS ============
+
+/**
+ * Fetch a creepy image for Upside Down mode from Unsplash API
+ * @param {string} apiKey - Unsplash API key
+ * @returns {Promise<Object>} Image data including URL
+ */
+async function fetchUpsideDownImage(apiKey) {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+    const response = await fetch('https://api.unsplash.com/photos/random?orientation=landscape&query=dark,veins,organic,red,abstract,horror,neural,network', {
+      headers: {
+        'Authorization': `Client-ID ${apiKey}`
+      },
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Trigger download tracking
+    if (data.links && data.links.download_location) {
+      fetch(data.links.download_location, {
+        headers: {
+          'Authorization': `Client-ID ${apiKey}`
+        }
+      });
+    }
+
+    return {
+      url: data.urls.full + '&w=1920&q=80'
+    };
+  } catch (error) {
+    console.error('Error fetching Upside Down image:', error);
+    throw error;
+  }
+}
+
+/**
+ * Load and apply Upside Down background image
+ */
+async function loadUpsideDownBackground() {
+  try {
+    const result = await chrome.storage.sync.get(['unsplashApiKey']);
+    const apiKey = result.unsplashApiKey;
+
+    if (!apiKey) {
+      // No API key - use CSS gradient background already in place
+      return;
+    }
+
+    // Check if we have a cached Upside Down image
+    const cachedData = await chrome.storage.local.get(['upsideDownImageUrl']);
+
+    if (cachedData.upsideDownImageUrl) {
+      // Use cached image - set as CSS custom property for ::after pseudo-element
+      document.body.style.setProperty('--upside-down-bg', `url('${cachedData.upsideDownImageUrl}')`);
+    } else {
+      // Fetch new creepy image
+      const imageData = await fetchUpsideDownImage(apiKey);
+
+      // Cache it
+      await chrome.storage.local.set({
+        upsideDownImageUrl: imageData.url
+      });
+
+      document.body.style.setProperty('--upside-down-bg', `url('${imageData.url}')`);
+    }
+  } catch (error) {
+    console.error('Error loading Upside Down background:', error);
+    // Fallback to CSS gradient (already in place)
+  }
+}
 
 /**
  * Fetch a random image from Unsplash API
