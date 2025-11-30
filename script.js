@@ -603,31 +603,28 @@ function triggerCelebration(isFromUpsideDown = false) {
 
 // ============ UPSIDE DOWN BACKGROUND IMAGES ============
 /**
- * Hardcoded Stranger Things / Hive Mind / Vecna background images
+ * Local Stranger Things / Hive Mind / Vecna background images
  *
- * TO CUSTOMIZE: Replace these URLs with your preferred Stranger Things images
- * Search for: "Stranger Things hive mind", "Vecna Stranger Things", "Upside Down vines"
+ * These images are stored locally in the extension folder for:
+ * - Faster loading (no network delay)
+ * - Reliable performance (no API dependency)
+ * - Authentic Stranger Things imagery
  *
- * Good sources:
- * - https://wallpapercave.com/stranger-things-vecna-wallpapers
- * - https://wallpaperaccess.com/stranger-things-vecna
- * - https://wallpapersden.com/vecna-stranger-things-wallpaper/1920x1080/
- *
- * Right-click any image → "Copy image address" → Paste URL below
+ * Location: images/upside-down/
+ * To add more images: Download high-res images and add paths to array below
  */
 const upsideDownImages = [
-  // Dark atmospheric images with organic/vein-like patterns
-  // REPLACE THESE with actual Stranger Things/Vecna images from the sources above
-  'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1920&q=80', // Dark veins abstract
-  'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=1920&q=80', // Red dark abstract
-  'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=1920&q=80', // Dark organic tendrils
-  'https://images.unsplash.com/photo-1509699959821-2e607e5ae224?w=1920&q=80', // Dark red lightning
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&q=80'  // Dark atmospheric
+  'images/upside-down/Vecna-1.jpg',
+  'images/upside-down/Vecna-2.jpg',
+  'images/upside-down/Vecna-3.jpg',
+  'images/upside-down/hive-mind-1.jpg',
+  'images/upside-down/hive-mind-2.jpg',
+  'images/upside-down/hive-mind-3.png'
 ];
 
 /**
  * Load and apply Upside Down background image
- * Randomly selects from hardcoded image array
+ * Randomly selects from local image array
  */
 async function loadUpsideDownBackground() {
   try {
@@ -638,7 +635,7 @@ async function loadUpsideDownBackground() {
     // Set as CSS custom property for ::after pseudo-element
     document.body.style.setProperty('--upside-down-bg', `url('${imageUrl}')`);
 
-    console.log(`Loaded Upside Down background: Image ${randomIndex + 1}/${upsideDownImages.length}`);
+    console.log(`Loaded Upside Down background: ${imageUrl} (${randomIndex + 1}/${upsideDownImages.length})`);
   } catch (error) {
     console.error('Error loading Upside Down background:', error);
     // Fallback to CSS gradient (already in place)
