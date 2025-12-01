@@ -2,6 +2,22 @@
 
 A beautiful, minimal Chrome extension that transforms your new tab page into an inspiring productivity dashboard with a mysterious twist. Built with vanilla JavaScript, featuring dynamic backgrounds, time-based greetings, Pomodoro timer, and a hidden "Upside Down" mode inspired by Stranger Things.
 
+## 📸 Screenshots
+
+### Normal Mode
+<img width="1161" height="791" alt="normal-mode" src="https://github.com/user-attachments/assets/57cd44c0-a744-4ecb-9254-581f67ab40b1" />
+
+
+### Pomodoro Timer
+![Pomodoro Timer](screenshots/pomodoro-active.png)
+
+### Upside Down Mode 🌀
+![Upside Down Mode](screenshots/upside-down-mode.png)
+
+### Celebration Animation 🎉
+![Celebration](screenshots/celebration.png)
+
+
 ## 🌟 Features
 
 ### Core Productivity
