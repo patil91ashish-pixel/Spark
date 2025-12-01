@@ -706,7 +706,7 @@ async function fetchUnsplashImage(apiKey) {
 }
 
 /**
- * Load background image from Unsplash with daily caching
+ * Load background image from Unsplash with hourly caching
  * @param {boolean} forceRefresh - Force fetch new image regardless of cache
  */
 async function loadUnsplashBackground(forceRefresh = false) {
@@ -722,11 +722,13 @@ async function loadUnsplashBackground(forceRefresh = false) {
       return;
     }
 
-    const today = new Date().toDateString();
-    const cachedData = await chrome.storage.local.get(['unsplashImageDate', 'unsplashImageData']);
+    // Create hourly cache key (e.g., "Mon Dec 01 2025-19")
+    const now = new Date();
+    const currentHour = `${now.toDateString()}-${now.getHours()}`;
+    const cachedData = await chrome.storage.local.get(['unsplashImageHour', 'unsplashImageData']);
 
-    // Check if we have a cached image from today and not forcing refresh
-    if (!forceRefresh && cachedData.unsplashImageDate === today && cachedData.unsplashImageData) {
+    // Check if we have a cached image from current hour and not forcing refresh
+    if (!forceRefresh && cachedData.unsplashImageHour === currentHour && cachedData.unsplashImageData) {
       const imageData = cachedData.unsplashImageData;
       setBackgroundImage(imageData.url);
       showAttribution(imageData);
@@ -736,9 +738,9 @@ async function loadUnsplashBackground(forceRefresh = false) {
     // Fetch new image from Unsplash
     const imageData = await fetchUnsplashImage(apiKey);
 
-    // Cache the image data
+    // Cache the image data with current hour
     await chrome.storage.local.set({
-      unsplashImageDate: today,
+      unsplashImageHour: currentHour,
       unsplashImageData: imageData
     });
 
