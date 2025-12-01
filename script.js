@@ -390,10 +390,6 @@ async function activateUpsideDown() {
   document.body.classList.add('upside-down');
   localStorage.setItem('upsideDownActive', 'true');
 
-  // Clear the normal background image (set via inline style)
-  // This allows the Upside Down background (::after pseudo-element) to show
-  document.body.style.backgroundImage = 'none';
-
   // Load creepy Upside Down background image
   await loadUpsideDownBackground();
 
@@ -425,11 +421,8 @@ async function escapeUpsideDown() {
     // Clear the Upside Down background element
     const upsideDownBg = document.getElementById('upside-down-background');
     if (upsideDownBg) {
-      upsideDownBg.style.backgroundImage = 'none';
+      upsideDownBg.style.backgroundImage = '';
     }
-
-    // Remove the inline 'none' style from body to allow CSS to work
-    document.body.style.backgroundImage = '';
 
     // Restore normal background
     const result = await chrome.storage.sync.get(['backgroundMode']);
