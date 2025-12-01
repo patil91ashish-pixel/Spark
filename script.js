@@ -194,8 +194,26 @@ function updateGreeting() {
       greetingText = 'Good morning';
     } else if (hour >= 12 && hour < 18) {
       greetingText = 'Good afternoon';
-    } else {
+    } else if (hour >= 18 && hour < 21) {
       greetingText = 'Good evening';
+    } else {
+      // Late evening greetings (9:00 PM - 11:59 PM)
+      // Pick one randomly and keep it for the session
+      const lateEveningGreetings = [
+        'Working late?',
+        'Still going strong?',
+        'Burning the midnight oil?'
+      ];
+
+      // Check if we already have a greeting for this session
+      let sessionGreeting = sessionStorage.getItem('lateEveningGreeting');
+      if (!sessionGreeting) {
+        // Pick a random greeting and store it for this session
+        const randomIndex = Math.floor(Math.random() * lateEveningGreetings.length);
+        sessionGreeting = lateEveningGreetings[randomIndex];
+        sessionStorage.setItem('lateEveningGreeting', sessionGreeting);
+      }
+      greetingText = sessionGreeting;
     }
 
     greetingEl.textContent = name ? `${greetingText}, ${name}` : greetingText;
