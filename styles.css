@@ -793,7 +793,8 @@ body.upside-down .test-hint {
 /* Upside Down Mode - Dark Hive Mind Background with Creepy Image */
 body.upside-down {
   /* Remove normal background in favor of creepy image layer */
-  background: #000000;
+  /* Using !important to override inline styles set by JavaScript */
+  background: #000000 !important;
   transition: all 2s ease;
 }
 
