@@ -470,11 +470,8 @@ function toggleUpsideDownTest() {
   const isCurrentlyUpsideDown = document.body.classList.contains('upside-down');
 
   if (isCurrentlyUpsideDown) {
-    // Turn off Upside Down mode
-    document.body.classList.remove('upside-down');
-    localStorage.removeItem('upsideDownActive');
-    // Reload quote to show normal quote
-    loadDailyQuote(true);
+    // Turn off Upside Down mode - use proper escape function to show message
+    escapeUpsideDown();
   } else {
     // Turn on Upside Down mode - use the proper activation function
     activateUpsideDown();
