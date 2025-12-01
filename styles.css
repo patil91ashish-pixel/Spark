@@ -259,14 +259,12 @@ body.upside-down .pomodoro-section {
 }
 
 .pomodoro-reset {
-  opacity: 0;
-  pointer-events: none;
+  display: none;
   transition: opacity 0.3s ease;
 }
 
 .pomodoro-reset.visible {
-  opacity: 1;
-  pointer-events: auto;
+  display: inline-block;
 }
 
 .pomodoro-status {
