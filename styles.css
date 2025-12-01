@@ -837,8 +837,8 @@ body.upside-down {
 body.upside-down .upside-down-background {
   opacity: 1;
   animation: hive-breathe 6s ease-in-out infinite;
-  /* Dark red filter for creepy effect - ONLY affects background */
-  filter: brightness(0.3) saturate(1.5) hue-rotate(330deg) contrast(1.3);
+  /* Dark red filter for creepy effect - Increased brightness and contrast for visibility */
+  filter: brightness(0.5) saturate(1.5) hue-rotate(330deg) contrast(1.6);
 }
 
 body.upside-down .container {
