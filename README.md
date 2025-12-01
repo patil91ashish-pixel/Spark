@@ -5,7 +5,7 @@ A beautiful, minimal Chrome extension that transforms your new tab page into an 
 ## 📸 Screenshots
 
 ### Normal Mode
-<img width="1161" height="791" alt="normal-mode" src="https://github.com/user-attachments/assets/57cd44c0-a744-4ecb-9254-581f67ab40b1" />
+<img width="1892" height="945" alt="normal-mode" src="https://github.com/user-attachments/assets/7e8cc983-5426-4473-be7b-21859bffc8bb" />
 
 
 ### Pomodoro Timer
