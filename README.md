@@ -19,6 +19,10 @@ A beautiful, minimal Chrome extension that transforms your new tab page into an 
 ### Settings Panel
 <img width="1179" height="947" alt="settings-panel" src="https://github.com/user-attachments/assets/667a7e08-0633-4637-ac18-499fee16cd6a" />
 
+### Goal Achieved
+<img width="1210" height="716" alt="goal-achieved" src="https://github.com/user-attachments/assets/0f743bf8-c0f8-417a-9429-e3106224d1d0" />
+
+
 
 ## 🌟 Features
 
