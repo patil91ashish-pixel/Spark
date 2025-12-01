@@ -639,10 +639,16 @@ async function loadUpsideDownBackground() {
     // Convert relative path to absolute chrome-extension:// URL
     const imageUrl = chrome.runtime.getURL(imagePath);
 
-    // Set as CSS custom property for ::after pseudo-element
-    document.body.style.setProperty('--upside-down-bg', `url('${imageUrl}')`);
+    // Get the Upside Down background element
+    const upsideDownBg = document.getElementById('upside-down-background');
 
-    console.log(`Loaded Upside Down background: ${imagePath} -> ${imageUrl} (${randomIndex + 1}/${upsideDownImages.length})`);
+    if (upsideDownBg) {
+      // Set background-image directly on the element
+      upsideDownBg.style.backgroundImage = `url('${imageUrl}')`;
+      console.log(`Loaded Upside Down background: ${imagePath} -> ${imageUrl} (${randomIndex + 1}/${upsideDownImages.length})`);
+    } else {
+      console.error('upside-down-background element not found');
+    }
   } catch (error) {
     console.error('Error loading Upside Down background:', error);
     // Fallback to CSS gradient (already in place)
