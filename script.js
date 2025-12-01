@@ -422,6 +422,15 @@ async function escapeUpsideDown() {
     document.body.classList.remove('upside-down');
     localStorage.removeItem('upsideDownActive');
 
+    // Clear the Upside Down background element
+    const upsideDownBg = document.getElementById('upside-down-background');
+    if (upsideDownBg) {
+      upsideDownBg.style.backgroundImage = 'none';
+    }
+
+    // Remove the inline 'none' style from body to allow CSS to work
+    document.body.style.backgroundImage = '';
+
     // Restore normal background
     const result = await chrome.storage.sync.get(['backgroundMode']);
     const mode = result.backgroundMode || 'unsplash';
