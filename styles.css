@@ -844,7 +844,7 @@ body.upside-down .background-overlay {
     radial-gradient(ellipse at 30% 40%, rgba(13, 77, 77, 0.12) 0%, transparent 40%),
     radial-gradient(ellipse at 70% 60%, rgba(13, 77, 77, 0.1) 0%, transparent 35%);
   transition: all 2s ease;
-  z-index: 1;
+  z-index: -1;
   animation: vignette-pulse 5s ease-in-out infinite;
 }
 
