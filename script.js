@@ -413,6 +413,7 @@ async function escapeUpsideDown() {
   // Show escape message
   escapeMessage.classList.add('show');
 
+  // Wait 2.5 seconds for user to see the message
   setTimeout(async () => {
     // Remove Upside Down mode
     document.body.classList.remove('upside-down');
@@ -435,14 +436,14 @@ async function escapeUpsideDown() {
       setStaticBackground(bgIndex);
     }
 
-    // Hide escape message
+    // Hide escape message after transition
     setTimeout(() => {
       escapeMessage.classList.remove('show');
-    }, 2000);
+    }, 500);
 
     // Reload quote to show normal inspirational quote
     loadDailyQuote(true);
-  }, 100);
+  }, 2500);
 }
 
 /**
@@ -1028,10 +1029,11 @@ function setupEventListeners() {
     }
   });
 
-  // Test Mode: Press 'U' to toggle Upside Down mode
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'u' || e.key === 'U') {
+  // Demogorgon Trigger: Click to toggle Upside Down mode
+  const demogorgonTrigger = document.getElementById('demogorgon-trigger');
+  if (demogorgonTrigger) {
+    demogorgonTrigger.addEventListener('click', () => {
       toggleUpsideDownTest();
-    }
-  });
+    });
+  }
 }

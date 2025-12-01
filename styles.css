@@ -86,7 +86,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
+  gap: 10px;
 }
 
 .goal-checkbox {
@@ -653,27 +653,35 @@ body {
 }
 
 /* Test Mode Hint */
-.test-hint {
+/* Demogorgon Trigger Icon */
+.demogorgon-trigger {
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  font-size: 0.7rem;
-  opacity: 0.3;
-  color: white;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-  z-index: 50;
-  transition: opacity 0.3s ease;
-}
-
-.test-hint:hover {
+  bottom: 25px;
+  right: 25px;
+  font-size: 45px;
   opacity: 0.6;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  user-select: none;
 }
 
-body.upside-down .test-hint {
-  color: #ff9999;
-  opacity: 0.4;
-  text-shadow: 0 1px 5px rgba(139, 0, 0, 0.8);
+.demogorgon-trigger:hover {
+  opacity: 1;
+  transform: scale(1.15);
+  filter: drop-shadow(0 4px 12px rgba(139, 0, 0, 0.8));
+}
+
+body.upside-down .demogorgon-trigger {
+  opacity: 0.8;
+  filter: drop-shadow(0 2px 12px rgba(255, 0, 0, 0.8));
+}
+
+body.upside-down .demogorgon-trigger:hover {
+  opacity: 1;
+  transform: scale(1.15);
+  filter: drop-shadow(0 4px 16px rgba(255, 0, 0, 1));
 }
 
 /* ========== CELEBRATION ANIMATION ========== */
@@ -774,10 +782,13 @@ body.upside-down .test-hint {
   border: 2px solid #ff0000;
   padding: 2rem 3rem;
   border-radius: 12px;
-  font-size: 2rem;
-  font-weight: 300;
+  font-size: 36px;
+  font-weight: 400;
   color: #ffffff;
-  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.8),
+    0 0 30px rgba(255, 0, 0, 0.6),
+    0 0 40px rgba(255, 0, 0, 0.4);
   z-index: 1000;
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
