@@ -9,13 +9,15 @@ A beautiful, minimal Chrome extension that transforms your new tab page into an 
 
 
 ### Pomodoro Timer
-![Pomodoro Timer](screenshots/pomodoro-active.png)
+<img width="1618" height="874" alt="pomodoro-active" src="https://github.com/user-attachments/assets/d366ec63-2b55-4356-959b-03531c2438fd" />
+
 
 ### Upside Down Mode 🌀
-![Upside Down Mode](screenshots/upside-down-mode.png)
+<img width="1914" height="1031" alt="upside-down-mode" src="https://github.com/user-attachments/assets/a56c29fc-7f9c-4fec-9cda-c96eae138282" />
 
-### Celebration Animation 🎉
-![Celebration](screenshots/celebration.png)
+
+### Settings Panel
+<img width="1179" height="947" alt="settings-panel" src="https://github.com/user-attachments/assets/667a7e08-0633-4637-ac18-499fee16cd6a" />
 
 
 ## 🌟 Features
