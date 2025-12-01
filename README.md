@@ -1,19 +1,57 @@
-# Spark - New Tab Chrome Extension
+# Spark - New Tab Chrome Extension ✨
 
-A beautiful, minimal Chrome extension that transforms your new tab page into an inspiring productivity dashboard, similar to Momentum.
+A beautiful, minimal Chrome extension that transforms your new tab page into an inspiring productivity dashboard with a mysterious twist. Built with vanilla JavaScript, featuring dynamic backgrounds, time-based greetings, Pomodoro timer, and a hidden "Upside Down" mode inspired by Stranger Things.
 
-## Features
+## 🌟 Features
 
-- **Dynamic Time & Date**: Always-current time display with elegant formatting
-- **Time-based Greetings**: Personalized greetings that change throughout the day (morning, afternoon, evening)
-- **Daily Inspirational Quotes**: Fresh motivational quotes that change every day
-- **Beautiful Backgrounds**: Collection of stunning nature images with customizable selection
-- **Main Focus Goal**: Set and display your primary objective for the day
-- **Todo List**: Simple, elegant task manager to track your daily tasks
-- **Local Storage**: All your data is saved locally using Chrome's storage API
-- **Minimal Design**: Clean, modern interface with smooth animations and blur effects
+### Core Productivity
+- **⏰ Dynamic Time & Date**: Real-time clock with elegant formatting that updates every second
+- **👋 Smart Time-based Greetings**: Personalized greetings with variations throughout the day
+  - Late night (12-6 AM): Random playful greetings
+  - Morning (6 AM-12 PM): "Good morning"
+  - Afternoon (12-6 PM): "Good afternoon"
+  - Evening (6-9 PM): "Good evening"
+  - Late evening (9 PM-12 AM): Random motivational greetings
+- **🎯 Daily Goal Tracking**: Set your main focus for the day with checkbox completion
+- **🎉 Celebration Animation**: Beautiful confetti animation when you complete your goal
+- **💬 Daily Inspirational Quotes**: Curated collection of 25+ motivational quotes with daily rotation
+- **🔄 Quote Refresh**: Manual refresh button to get a new quote anytime
 
-## Installation
+### Pomodoro Focus Timer 🍅
+- **Traditional Pomodoro Technique**: 25-minute focus sessions, 5-minute short breaks, 15-minute long breaks
+- **Session Tracking**: Visual indicator showing current session (1/4, 2/4, etc.)
+- **Smart Persistence**: Timer state saved across sessions, auto-resets daily
+- **Session Types**: Automatically cycles between work and break sessions
+- **Visual Notifications**: Gentle flash and completion messages (no sound)
+- **Clean Interface**: Minimal design with "Focus Timer" heading and elegant controls
+- **Hidden in Upside Down Mode**: Disappears when in the mysterious dimension
+
+### Dynamic Backgrounds
+- **🖼️ Unsplash API Integration**: High-quality landscape photos that change hourly
+- **📸 Photographer Attribution**: Proper credits for Unsplash photographers
+- **🔄 Manual Refresh**: Force-load a new background anytime
+- **💾 Smart Caching**: Hourly caching reduces API calls (24 unique images per day)
+- **🎨 Static Backgrounds**: Fallback collection of 5 curated nature images
+
+### 🌀 Upside Down Mode (Easter Egg)
+A hidden Stranger Things-inspired theme that transforms your tab into the eerie Upside Down dimension:
+- **180° Page Rotation**: Everything flips upside down
+- **Creepy Vecna Backgrounds**: 6 custom Stranger Things images (Vecna, Hive Mind)
+- **RGB Glitch Effects**: Heavy chromatic aberration and text corruption
+- **Red Eyes**: Menacing Vecna presence watching from above
+- **Organic Particles**: 50-100 floating spores with varied colors
+- **Dark Atmosphere**: Pulsing vignettes, tendrils, scan lines, and film grain
+- **Creepy Messages**: "Complete your goal to escape..."
+- **Escape Animation**: Dramatic message when completing your goal
+- **Demogorgon Trigger**: 👹 icon in bottom-right corner to manually toggle
+
+### Settings & Customization
+- **⚙️ Settings Panel**: Elegant glassmorphic settings overlay
+- **🔐 API Key Management**: Secure storage for your Unsplash API key
+- **🖼️ Background Mode Toggle**: Switch between Unsplash dynamic and static images
+- **💾 Cloud Sync**: All preferences saved via Chrome Storage Sync API
+
+## 📦 Installation
 
 ### Method 1: Load as Unpacked Extension (Development)
 
@@ -24,196 +62,303 @@ A beautiful, minimal Chrome extension that transforms your new tab page into an 
    ```
 
 2. **Open Chrome Extensions page**
-   - Open Google Chrome
    - Navigate to `chrome://extensions/`
-   - Or click the three dots menu → More Tools → Extensions
+   - Or Menu → More Tools → Extensions
 
 3. **Enable Developer Mode**
-   - Toggle the "Developer mode" switch in the top right corner
+   - Toggle the "Developer mode" switch in the top right
 
 4. **Load the extension**
-   - Click "Load unpacked" button
-   - Navigate to the Spark folder and select it
-   - The extension should now appear in your extensions list
+   - Click "Load unpacked"
+   - Select the Spark folder
+   - Extension appears in your list
 
-5. **Test it**
+5. **Get Unsplash API Key (Optional but Recommended)**
+   - Visit [Unsplash Developers](https://unsplash.com/developers)
+   - Create a free account
+   - Register a new application
+   - Copy your Access Key
+   - Open a new tab → Click Settings ⚙️
+   - Paste your API key and save
+
+6. **Test it**
    - Open a new tab (Cmd+T or Ctrl+T)
-   - You should see your new Spark new tab page!
+   - Enjoy your Spark new tab page!
 
-### Method 2: Create Icons First (Optional)
+### Method 2: Install Icons (Optional)
 
-If you want proper icons before loading:
+Create an `icons` folder with:
+- `icon16.png` (16×16 pixels)
+- `icon48.png` (48×48 pixels)
+- `icon128.png` (128×128 pixels)
 
-1. Create an `icons` folder in the Spark directory
-2. Add PNG images named:
-   - `icon16.png` (16x16 pixels)
-   - `icon48.png` (48x48 pixels)
-   - `icon128.png` (128x128 pixels)
+## 🎮 Usage Guide
 
-Alternatively, the extension will work without icons, though Chrome may show a default icon.
+### Setting Your Daily Goal
+1. Type your main focus in the center input field
+2. Press Enter or click away to save
+3. Checkbox appears next to your goal
+4. Check it off when complete → Celebration animation!
+5. In Upside Down mode: Completing the goal lets you escape
 
-## Usage Guide
+### Using the Pomodoro Timer
+1. **Start a Focus Session**: Click "Start" button
+2. **Work**: Focus for 25 minutes
+3. **Take a Break**: Timer automatically switches to 5-minute break
+4. **Long Break**: After 4 sessions, get a 15-minute break
+5. **Reset**: Click "Reset" to restart current session
+6. **Persistence**: Timer continues even if you close the tab (state saved)
 
-### Setting Your Main Focus
-
-1. When you first open a new tab, you'll see "What is your main focus for today?"
-2. Type your main goal or objective for the day
-3. Press Enter or click outside the input to save
-4. Your focus will be displayed prominently in the center
-5. Click the edit button (✏️) to change it anytime
-
-### Managing Todos
-
-1. Click the 📝 button in the bottom right to open the todo panel
-2. Type a task in the input field and press Enter or click the + button
-3. Check off tasks as you complete them
-4. Click the ✕ button to delete a task
-5. Your todos are automatically saved
+### Exploring Upside Down Mode
+1. Click the 👹 Demogorgon icon (bottom-right corner)
+2. Experience the eerie transformation
+3. Complete your goal to trigger escape sequence
+4. Wait for "You've escaped the Upside Down" message
+5. Normal mode restores after 2.5 seconds
 
 ### Changing Backgrounds
-
-1. Click the settings button (⚙️) in the top right corner
-2. Select a different background from the dropdown menu
-3. Your preference is saved automatically
-4. Choose from 5 beautiful nature scenes
+1. Click ⚙️ Settings button
+2. Choose between Unsplash API or Static backgrounds
+3. If using Unsplash, enter your API key
+4. Click 🔄 refresh button (top-right) for new image
+5. New image loads every hour automatically
 
 ### Daily Quotes
+- Quote changes daily at midnight
+- Click 🔄 button next to author for instant refresh
+- 25+ curated motivational quotes
 
-- A new inspirational quote appears each day
-- Quotes are selected from a curated collection of 20+ inspirational messages
-- The quote changes automatically at midnight
-
-## File Structure
+## 📁 File Structure
 
 ```
 Spark/
-├── manifest.json          # Extension configuration
-├── newtab.html           # Main HTML structure
-├── styles.css            # All styling and animations
-├── script.js             # Core functionality
-├── README.md             # This file
-└── icons/                # Extension icons (optional)
+├── manifest.json                    # Extension config & permissions
+├── newtab.html                      # Main HTML structure
+├── styles.css                       # All styling (38KB+ with Upside Down effects)
+├── script.js                        # Core logic (43KB+ with Pomodoro & Upside Down)
+├── README.md                        # This file
+├── images/
+│   └── upside-down/                # Stranger Things background images
+│       ├── Vecna-1.jpg
+│       ├── Vecna-2.jpg
+│       ├── Vecna-3.jpg
+│       ├── hive-mind-1.jpg
+│       ├── hive-mind-2.jpg
+│       └── hive-mind-3.png
+└── icons/                          # Extension icons (optional)
     ├── icon16.png
     ├── icon48.png
     └── icon128.png
 ```
 
-## Technology Stack
+## 🛠️ Technology Stack
 
-- **HTML5**: Semantic structure
-- **CSS3**: Modern styling with animations, blur effects, and responsive design
-- **Vanilla JavaScript**: No frameworks, pure JS for performance
-- **Chrome Storage API**: Persistent data storage
-- **Unsplash**: High-quality background images
+- **HTML5**: Semantic structure with contenteditable for goal input
+- **CSS3**:
+  - Glassmorphic blur effects with `backdrop-filter`
+  - Complex animations (confetti, particles, glitch effects)
+  - Keyframe animations for Upside Down atmosphere
+  - Responsive design with mobile breakpoints
+- **Vanilla JavaScript**: Zero dependencies, pure performance
+  - Async/await for API calls
+  - Chrome Storage API (sync + local)
+  - SessionStorage for greeting persistence
+  - LocalStorage for daily resets and timer state
+- **Chrome Extension APIs**:
+  - `chrome.storage.sync` for settings
+  - `chrome.storage.local` for hourly cache
+  - `chrome.runtime.getURL()` for local images
+- **Unsplash API**: High-quality landscape photography
 
-## Features in Detail
+## 🎨 Features in Detail
 
-### Time-based Greeting
-- **Morning** (12 AM - 11:59 AM): "Good morning"
-- **Afternoon** (12 PM - 5:59 PM): "Good afternoon"
-- **Evening** (6 PM - 11:59 PM): "Good evening"
+### Time-based Greetings (Enhanced)
+- **12 AM - 5:59 AM** (Late Night):
+  - "Burning the midnight oil?"
+  - "Working late?"
+  - "Early bird or night owl?"
+- **6 AM - 11:59 AM**: "Good morning"
+- **12 PM - 5:59 PM**: "Good afternoon"
+- **6 PM - 8:59 PM**: "Good evening"
+- **9 PM - 11:59 PM** (Late Evening):
+  - "Working late?"
+  - "Still going strong?"
+  - "Burning the midnight oil?"
 
-### Storage
-All data is stored using Chrome's `chrome.storage.sync` API:
-- Main focus/goal
-- Todo list items
-- Background preference
-- Daily quote (local storage)
+Random greetings persist for the entire browser session (using `sessionStorage`).
 
-### Responsive Design
-The extension adapts to different screen sizes with breakpoints at 768px.
+### Pomodoro Timer Details
+- **Work Session**: 25 minutes (1500 seconds)
+- **Short Break**: 5 minutes (300 seconds)
+- **Long Break**: 15 minutes (900 seconds) - after completing 4 work sessions
+- **State Persistence**: Timer, session type, and count saved in localStorage
+- **Daily Reset**: Automatically resets at midnight
+- **Visual Feedback**:
+  - Timer pulses when complete
+  - Green flash effect
+  - "Session complete!" message overlay
+- **Auto-transition**: Automatically switches between work and break modes
 
-## Customization
+### Storage Architecture
+**Chrome Sync Storage** (syncs across devices):
+- `userName`: User's name (optional)
+- `backgroundMode`: 'unsplash' or 'static'
+- `backgroundIndex`: Selected static background (0-4)
+- `unsplashApiKey`: Encrypted API key
+- `goalText`: Current daily goal
+- `goalCompleted`: Completion status
+
+**Chrome Local Storage** (device-specific):
+- `unsplashImageHour`: Cache key (e.g., "Mon Dec 01 2025-19")
+- `unsplashImageData`: Cached image URL and photographer info
+
+**Browser localStorage**:
+- `upsideDownActive`: Boolean for Upside Down mode
+- `dailyQuote`: Cached quote with date
+- `goalCompletionDate`: Date of last goal completion
+- `pomodoroState`: Timer state object
+- `pomodoroDate`: Date string for daily reset
+
+**Browser sessionStorage**:
+- `lateNightGreeting`: Selected greeting for session
+- `lateEveningGreeting`: Selected greeting for session
+
+## ⚙️ Customization
+
+### Adding More Upside Down Images
+1. Download Stranger Things / creepy images
+2. Save to `images/upside-down/` folder
+3. Edit `script.js`, add to `upsideDownImages` array:
+```javascript
+const upsideDownImages = [
+  'images/upside-down/your-image.jpg',
+  // ... existing images
+];
+```
+4. Update `manifest.json` if needed for `web_accessible_resources`
 
 ### Adding More Quotes
-
-Edit `script.js` and add entries to the `quotes` array:
-
+Edit `script.js` and expand the `quotes` array:
 ```javascript
 const quotes = [
-  { text: "Your quote here", author: "Author Name" },
+  { text: "Your new quote here.", author: "Author Name" },
   // ... add more
 ];
 ```
 
-### Adding More Backgrounds
-
-Edit `script.js` and add URLs to the `backgrounds` array:
-
+### Changing Pomodoro Durations
+Edit `script.js` to modify work/break lengths:
 ```javascript
-const backgrounds = [
-  'https://your-image-url.com/image.jpg',
-  // ... add more
-];
+const POMODORO_DURATIONS = {
+  WORK: 25 * 60,        // Change 25 to your desired minutes
+  SHORT_BREAK: 5 * 60,  // Change 5 to your desired minutes
+  LONG_BREAK: 15 * 60   // Change 15 to your desired minutes
+};
 ```
 
-Then update the select options in `newtab.html`.
+### Customizing Colors & Effects
+Edit `styles.css`:
+- **Normal mode colors**: Search for `rgba(255, 255, 255, ...)`
+- **Upside Down colors**: Search for `body.upside-down` section
+- **Glassmorphic blur**: Modify `backdrop-filter: blur(10px)`
+- **Animations**: Edit `@keyframes` blocks
 
-### Changing Colors
-
-Edit `styles.css` and modify the RGBA values for backgrounds, overlays, and UI elements.
-
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Extension doesn't load
-- Make sure Developer Mode is enabled
-- Check that you selected the correct folder (should contain manifest.json)
-- Look for errors in the Extensions page
+- Ensure Developer Mode is enabled
+- Check correct folder selected (must contain `manifest.json`)
+- Look for errors in chrome://extensions page
 
-### New tab doesn't change
-- Refresh the extension by clicking the refresh icon on the Extensions page
-- Close all existing tabs and open a new one
-- Check Chrome's console for errors (F12)
+### Upside Down images not showing
+- Verify images exist in `images/upside-down/` folder
+- Check `manifest.json` has `web_accessible_resources` configured
+- Open DevTools (F12) → Console for error messages
 
-### Data not saving
-- Ensure the extension has storage permissions (check manifest.json)
-- Check Chrome's storage quota isn't exceeded
-- Try removing and re-adding the extension
+### Pomodoro timer not persisting
+- Check browser's localStorage quota isn't exceeded
+- Verify localStorage is enabled (not in Incognito mode)
+- Try resetting: Open DevTools → Application → Local Storage → Clear
 
-### Images not loading
-- Check your internet connection (backgrounds load from Unsplash)
-- Verify URLs in script.js are valid
-- Check browser console for CORS or network errors
+### Unsplash images not loading
+- Verify you've entered a valid API key in Settings
+- Check your API key hasn't exceeded rate limits (50 requests/hour for free tier)
+- Ensure stable internet connection
+- Check DevTools Network tab for API errors
 
-## Privacy
+### Escape message not showing
+- Complete your goal while in Upside Down mode (check the checkbox)
+- Or click the 👹 Demogorgon icon to manually exit
+- Message displays for 2.5 seconds before transitioning
 
-- All data is stored locally in your browser
-- No data is sent to external servers
-- Background images are loaded from Unsplash CDN
-- No analytics or tracking
+### Greeting not changing
+- Greetings update automatically every minute
+- Late night/evening greetings stay the same during browser session (by design)
+- Close and reopen browser to get a new random greeting
 
-## Future Enhancements
+## 🔒 Privacy
 
-Potential features for future versions:
-- Custom user name input
-- Weather widget
-- Pomodoro timer
-- Customizable quotes
-- Upload custom backgrounds
-- Keyboard shortcuts
-- Export/import settings
-- Dark/light theme toggle
+- ✅ All data stored locally in your browser
+- ✅ No analytics or tracking
+- ✅ No data sent to external servers (except Unsplash API for images)
+- ✅ Unsplash API only fetches images, doesn't send personal data
+- ✅ API key encrypted by Chrome Storage
+- ✅ Open source - audit the code yourself
 
-## Contributing
+## 📝 Changelog
 
-Feel free to fork this repository and submit pull requests for improvements!
+### Recent Updates
+- ✨ Added Pomodoro Focus Timer with persistence
+- 🎨 Added "Focus Timer" heading for better clarity
+- 🐛 Fixed Start button centering when Reset button hidden
+- 🐛 Fixed overlapping greeting and date text
+- 🐛 Fixed escape message not showing on manual Upside Down exit
+- 🕐 Split evening greetings (6-9 PM vs 9 PM-12 AM)
+- 🖼️ Changed background refresh from daily to hourly (24 images/day)
+- 🎨 Increased Upside Down image brightness for better visibility
+- 🎯 Fixed checkbox positioning (immediately next to goal)
+- 👹 Added Demogorgon trigger icon for manual Upside Down toggle
+- ⏰ Improved escape message timing and styling
 
-## License
+### Previous Features
+- 🌀 Complete Upside Down mode with Stranger Things theme
+- 🎉 Celebration animation on goal completion
+- 💬 Local curated quote collection (replaced Quotable API)
+- 🖼️ Unsplash API integration with hourly caching
+- 👋 Time-based greeting variations
+- ⚙️ Elegant settings panel
+- 📱 Responsive design
 
-MIT License - feel free to use and modify as you wish.
+## 🤝 Contributing
 
-## Credits
+Contributions welcome! Feel free to:
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-- Background images from [Unsplash](https://unsplash.com)
-- Inspired by [Momentum](https://momentumdash.com)
+## 📄 License
 
-## Support
+MIT License - feel free to use, modify, and distribute.
 
-If you encounter any issues or have questions:
-1. Check the Troubleshooting section above
-2. Open an issue on GitHub
-3. Review Chrome's extension documentation
+## 🙏 Credits
+
+- **Background images**: [Unsplash](https://unsplash.com)
+- **Stranger Things theme inspiration**: Netflix's Stranger Things
+- **Original concept inspired by**: [Momentum](https://momentumdash.com)
+- **Built with love by**: [@patil91ashish](https://github.com/patil91ashish)
+
+## 🆘 Support
+
+Encountered an issue?
+1. Check the Troubleshooting section
+2. Open DevTools (F12) → Console for error messages
+3. [Open an issue on GitHub](https://github.com/patil91ashish/Spark/issues)
+4. Review [Chrome Extension documentation](https://developer.chrome.com/docs/extensions/)
 
 ---
 
-**Enjoy your new productive tab! 🚀**
+**Enjoy your productive (and occasionally creepy) new tab! 🚀🌀**
+
+*"The universe is change; our life is what our thoughts make it." — Marcus Aurelius*
