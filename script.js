@@ -476,6 +476,25 @@ function handleGoalCheckboxChange() {
 
     // Trigger celebration (with special handling for Upside Down mode)
     triggerCelebration(isUpsideDown);
+
+    // After celebration completes, clear the goal for a fresh start
+    setTimeout(() => {
+      // Clear the goal text
+      focusInputEl.textContent = '';
+
+      // Uncheck the checkbox
+      goalCheckbox.checked = false;
+
+      // Hide the checkbox
+      goalCheckbox.classList.remove('visible');
+
+      // Clear from storage
+      chrome.storage.sync.set({ mainGoal: '' });
+      localStorage.setItem('goalCompleted', 'false');
+
+      // Focus on input for new goal
+      focusInputEl.focus();
+    }, 2500); // Wait for celebration animation to complete
   }
 
   saveGoalCompletion(isCompleted);
